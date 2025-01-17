@@ -86,7 +86,7 @@ hooks:
         - "{{`{{ .Release.Namespace }}`}}"
         - "true"
   gcp-cluster:
-    # TODO: The hook is needed to resolving issue with empty kubernetesTaints values for GKE machines pools.
+    # TODO: The hook is needed for resolving the issue with empty kubernetesTaints values for GKE machines pools.
     #       This temporary solution may be deprecated in the subsequent releases.
     #       https://github.com/kubernetes-sigs/cluster-api-provider-gcp/pull/1371
     gcp-cluster-presync-hook:
