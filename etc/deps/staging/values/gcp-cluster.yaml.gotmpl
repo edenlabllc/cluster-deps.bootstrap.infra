@@ -33,10 +33,11 @@ cluster:
 
 controlPlane:
   spec:
-    version: "v1.29.10"
     clusterNetwork:
       privateCluster:
         enablePrivateNodes: true
+    releaseChannel: "stable"
+    version: "v1.30.5"
 
 templates:
   spec: &machinePoolsTemplateSpec
@@ -54,7 +55,7 @@ templates:
       # AutoUpgrade specifies whether node auto-upgrade is enabled for the node
       # pool. If enabled, node auto-upgrade helps keep the nodes in your node pool
       # up to date with the latest release version of Kubernetes.
-      autoUpgrade: false
+      autoUpgrade: true
     # MaxPodsPerNode is constraint enforced on the max num of pods per node.
     maxPodsPerNode: 110
     scaling:
@@ -112,250 +113,7 @@ machinePools:
         # If unspecified, the default machine type is `e2-medium`.
         machineType: "n2-standard-2"
         <<: *machinePoolsTemplateSpec
-    replicas: 10
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  clickhouse:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: clickhouse
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "clickhouse"
-        machineType: "n2-highcpu-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 2
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  clickhouse-search:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 50
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: clickhouse-search
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "clickhouse-search"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 2
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  elastic:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: es
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "es"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
     replicas: 1
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  fhirpostgres:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: fhir-postgres
-          fhir: postgres
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "fhir-postgres"
-        machineType: "n2-highcpu-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 2
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  kafka:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: kafka
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "kafka"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 3
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  loki:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: loki-stack
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "loki-stack"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 1
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  minio:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: minio
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "minio"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 1
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  mongodb:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: mongodb
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "mongodb"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 1
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  postgres:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: postgres
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "postgres"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 2
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  redis:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: redis
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "redis"
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 1
-    spec:
-      template:
-        <<: *machinePoolsTemplateSpecTemplate
-
-  zookeeper:
-    enabled: false
-    annotations: {}
-    labels: {}
-    managed:
-      spec:
-        additionalLabels: {}
-        diskSizeGb: 10
-        diskType: "pd-ssd"
-        kubernetesLabels:
-          db: zookeeper
-        kubernetesTaints:
-          - effect: "NoSchedule"
-            key: "key"
-            value: "zookeeper"
-        machineType: "n2-highcpu-2"
-        <<: *machinePoolsTemplateSpec
-    replicas: 3
     spec:
       template:
         <<: *machinePoolsTemplateSpecTemplate
