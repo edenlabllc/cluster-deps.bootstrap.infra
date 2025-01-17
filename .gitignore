@@ -1,0 +1,10 @@
+**.dec
+*/cluster/k3d/
+dist/
+.DS_Store
+.PROJECT/
+.deps/
+.env
+.helmfile/
+.idea/
+sops-age-keys/

@@ -1,0 +1,85 @@
+## AKS cluster configuration
+cluster:
+
+  ## The resource group for the AKS cluster object
+  resourceGroupName: {{ env "TENANT" }}
+
+  ## The resource group name for the nodes
+  nodeResourceGroupName: "{{ env "TENANT" }}-machine-pools"
+
+  ## The location of the cluster
+  location: {{ env "AZURE_LOCATION" }}
+
+  ## The name of the cluster
+  name: {{ env "NAME" }}
+
+  ## the subnet
+  cidrBlocks:
+    - 192.168.0.0/16
+
+controlPlane:
+  spec:
+    ## SSH public key (must be valid and in base64)
+    sshPublicKey: {{ readFile (printf "%s/.ssh/id_rsa.pub" (env "HOME")) | b64enc }}
+
+    ## Kubernetes version
+    version: v1.29.8
+
+    ## Network policy, "calico" (for kubenet and azurecni) or "azure" (for azureCNI)
+    networkPolicy: azure
+
+    networkPluginMode: overlay
+
+    ## Network Plugin "kubenet" or "azure"
+    networkPlugin: azure
+
+    subscriptionID: {{ env "AZURE_SUBSCRIPTION_ID" }}
+
+## The cluster identity configurations
+identity:
+  # ClusterIdentityName, name of "AzureClusterIdentity" custom resource, required
+  clusterIdentityName: azure-cluster-identity
+
+templates:
+  spec: &machinePoolsTemplateSpec
+    maxPods: 110
+    osDiskType: Managed
+    enableUltraSSD: false
+    osType: Linux
+    enableNodePublicIP: false
+    scaleSetPriority: Regular
+    scaleDownMode: Delete
+    kubeletDiskType: OS
+  specTemplate: &machinePoolsTemplateSpecTemplate
+    metadata: {}
+    spec:
+      bootstrap:
+        dataSecretName: ""
+
+machinePools:
+  system:
+    enabled: true
+
+  app:
+    enabled: false
+    replicas: 1
+    spec:
+      mode: User
+      sku: Standard_B2ls_v2
+      osDiskSizeGB: 30
+      additionalTags:
+        Category: app
+      nodeLabels:
+        db: app
+      taints: []
+      # - effect: "NoSchedule" # "NoSchedule", "NoExecute", "PreferNoSchedule"
+      #   # Key is the key of the taint
+      #   key: "key"
+      #   # Value is the value of the taint
+      #   value: "string"
+      scaling:
+        minSize: 1
+        maxSize: 1
+      <<: *machinePoolsTemplateSpec
+    specTemplate:
+      <<: *machinePoolsTemplateSpecTemplate

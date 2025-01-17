@@ -1,0 +1,145 @@
+{{- $awsRegion := env "AWS_REGION" }}
+{{- $awsAvailabilityZones := list (print $awsRegion "a") (print $awsRegion "b") (print $awsRegion "c") }}
+
+# Default values for aws-cluster.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## EKS cluster configuration
+cluster:
+  annotations: {}
+
+  labels: {}
+
+  ## The name of the cluster, required
+  name: {{ env "NAME" }}
+
+# A complete list of all options can be found here https://capz.sigs.k8s.io/reference/v1beta1-api
+controlPlane:
+  annotations: {}
+
+  labels: {}
+
+  spec:
+    iamAuthenticatorConfig:
+      # UserMappings is a list of user mappings
+      mapUsers: []
+{{/*# TODO: Add a list of users at the downstream tenant repository level*/}}
+{{/*        - groups:*/}}
+{{/*            - system:masters*/}}
+{{/*          # UserARN is the AWS ARN for the user to map*/}}
+{{/*          userarn: arn:aws:iam::{{ env "AWS_ACCOUNT_ID" }}:user/user1*/}}
+{{/*          # UserName is a kubernetes RBAC user subject*/}}
+{{/*          username: user1*/}}
+    network:
+      # Subnets configuration.
+      subnets:
+        {{- range $index, $item := $awsAvailabilityZones }}
+        - availabilityZone: {{ $item }}
+          cidrBlock: 10.0.{{ mul $index 16 }}.0/20
+          id: {{ env "NAME" }}-subnet-public-{{ $item }}
+          isPublic: true
+        - availabilityZone: {{ $item }}
+          cidrBlock: 10.0.{{ mul (add1 $index) 64 }}.0/18
+          id: {{ env "NAME" }}-subnet-private-{{ $item }}
+          isPublic: false
+        {{- end }}
+      vpc:
+        # AvailabilityZoneUsageLimit specifies the maximum number of availability zones (AZ) that
+        # should be used in a region when automatically creating subnets. If a region has more
+        # than this number of AZs then this number of AZs will be picked randomly when creating
+        # default subnets. Defaults to 3
+        availabilityZoneUsageLimit: {{ len $awsAvailabilityZones }}
+        # CidrBlock is the CIDR block to be used when the provider creates a managed VPC.
+        # Defaults to 10.0.0.0/16.
+        cidrBlock: 10.0.0.0/16
+
+    # The AWS Region the cluster lives in.
+    region: {{ $awsRegion }}
+    sshKeyName: {{ env "NAME" }}
+    version: v1.29.8 # ^v?(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.?(\.0|[1-9][0-9]*)?$
+
+templates:
+  machinePoolsTemplateSpec: &machinePoolsTemplateSpec
+    # Minimum number of seconds for which a newly created machine instances should
+    # be ready.
+    # Defaults to 0 (machine instance will be considered available as soon as it
+    # is ready)
+    minReadySeconds: 0
+    template:
+      metadata:
+        annotations: {}
+        labels: {}
+      spec:
+        bootstrap:
+          # DataSecretName is the name of the secret that stores the bootstrap data script.
+          # If nil, the Machine should remain in the Pending state.
+          dataSecretName: ""
+        # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
+        # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
+        # Defaults to 10 seconds.
+        nodeDeletionTimeout: "10s"
+        # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
+        # The default value is 0, meaning that the node can be drained without any time limitations.
+        # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
+        nodeDrainTimeout: "0s"
+        # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
+        # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
+        nodeVolumeDetachTimeout: "0s"
+
+  machinePoolsTemplateManagedSpec: &machinePoolsTemplateManagedSpec
+    # AMIType defines the AMI type
+    amiType: AL2_x86_64 # AL2023_ARM_64_STANDARD | AL2023_x86_64_STANDARD | AL2_ARM_64 | AL2_x86_64 | AL2_x86_64_GPU
+    # AvailabilityZoneSubnetType specifies which type of subnets to use when an availability zone is specified.
+    availabilityZoneSubnetType: private # all | private | public
+    # AvailabilityZones is an array of availability zones instances can run in
+    availabilityZones: {{ toJson $awsAvailabilityZones }}
+    # CapacityType specifies the capacity type for the ASG behind this pool
+    capacityType: onDemand # onDemand | spot
+    # RemoteAccess specifies how machines can be accessed remotely
+    remoteAccess:
+      # Public specifies whether to open port 22 to the public internet
+      public: false
+      # SourceSecurityGroups specifies which security groups are allowed access
+      sourceSecurityGroups: []
+    # UpdateConfig holds the optional config to control the behaviour of the update
+    # to the nodegroup.
+    updateConfig:
+      # MaxUnavailable is the maximum number of nodes unavailable at once during a version update.
+      # Nodes will be updated in parallel. The maximum number is 100.
+      maxUnavailable: 1
+
+## The machine pools configurations
+machinePools:
+  app:
+    enabled: false
+    annotations: {}
+    labels: {}
+    managed:
+      spec:
+        # AdditionalTags is an optional set of tags to add to AWS resources managed by the AWS provider, in addition to the
+        # ones added by default.
+        additionalTags: {}
+        # DiskSize specifies the root disk size
+        diskSize: 10
+        # InstanceType specifies the AWS instance type
+        instanceType: t3.medium
+        # Labels specifies labels for the Kubernetes node objects
+        labels:
+          db: app
+        # Scaling specifies scaling for the ASG behind this pool
+        scaling:
+          maxSize: 1
+          minSize: 1
+        # Taints specifies the taints to apply to the nodes of the machine pool
+        taints: []
+#          - effect: no-schedule
+#            # Key is the key of the taint
+#            key: key1
+#            # Value is the value of the taint
+#            value: value1
+        <<: *machinePoolsTemplateManagedSpec
+    # Number of desired machines. Defaults to 1.
+    replicas: 1
+    spec:
+      <<: *machinePoolsTemplateSpec
