@@ -24,10 +24,10 @@ inventory:
     secrets:
       version: v4.5.0
       url: https://github.com/jkroepke/helm-secrets
-#  hooks:
-#    helmfile.hooks.infra:
-#      version: v1.29.1
-#      url: git::https://github.com/edenlabllc/{{.Name}}.git?ref={{.Version}}
+  hooks:
+    helmfile.hooks.infra:
+      version: v1.29.1
+      url: git::https://github.com/edenlabllc/{{.Name}}.git?ref={{.Version}}
   tools:
     clusterctl:
       version: 1.7.4
