@@ -39,25 +39,9 @@ identity:
   # ClusterIdentityName, name of "AzureClusterIdentity" custom resource, required
   clusterIdentityName: azure-cluster-identity
 
-templates:
-  spec: &machinePoolsTemplateSpec
-    maxPods: 110
-    osDiskType: Managed
-    enableUltraSSD: false
-    osType: Linux
-    enableNodePublicIP: false
-    scaleSetPriority: Regular
-    scaleDownMode: Delete
-    kubeletDiskType: OS
-  specTemplate: &machinePoolsTemplateSpecTemplate
-    metadata: {}
-    spec:
-      bootstrap:
-        dataSecretName: ""
-
 machinePools:
   system:
-    enabled: true
+    enabled: false
 
   app:
     enabled: false
@@ -79,6 +63,16 @@ machinePools:
       scaling:
         minSize: 1
         maxSize: 1
-      <<: *machinePoolsTemplateSpec
+      maxPods: 110
+      osDiskType: Managed
+      enableUltraSSD: false
+      osType: Linux
+      enableNodePublicIP: false
+      scaleSetPriority: Regular
+      scaleDownMode: Delete
+      kubeletDiskType: OS
     specTemplate:
-      <<: *machinePoolsTemplateSpecTemplate
+      metadata: {}
+      spec:
+        bootstrap:
+          dataSecretName: ""

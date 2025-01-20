@@ -39,50 +39,6 @@ controlPlane:
     releaseChannel: "stable"
     version: "v1.30.5"
 
-templates:
-  spec: &machinePoolsTemplateSpec
-    # LinuxNodeConfig specifies the settings for Linux agent nodes.
-    linuxNodeConfig:
-      cgroupMode: ~
-      sysctls: []
-    # Management specifies the node pool management options.
-    management:
-      # AutoRepair specifies whether the node auto-repair is enabled for the node
-      # pool. If enabled, the nodes in this node pool will be monitored and, if
-      # they fail health checks too many times, an automatic repair action will be
-      # triggered.
-      autoRepair: false
-      # AutoUpgrade specifies whether node auto-upgrade is enabled for the node
-      # pool. If enabled, node auto-upgrade helps keep the nodes in your node pool
-      # up to date with the latest release version of Kubernetes.
-      autoUpgrade: true
-    # MaxPodsPerNode is constraint enforced on the max num of pods per node.
-    maxPodsPerNode: 110
-    scaling:
-      enableAutoscaling: false
-    # NodeLocations is the list of zones in which the NodePool's nodes should be located.
-    # minItems 0 of type string
-    nodeLocations:
-      - "{{ $gcpRegion }}-a"
-  specTemplate: &machinePoolsTemplateSpecTemplate
-    metadata: {}
-    spec:
-      bootstrap:
-          # DataSecretName is the name of the secret that stores the bootstrap data script.
-          # If nil, the Machine should remain in the Pending state.
-        dataSecretName: ""
-      # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
-      # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
-      # Defaults to 10 seconds.
-      nodeDeletionTimeout: "10s"
-      # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
-      # The default value is 0, meaning that the node can be drained without any time limitations.
-      # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
-      nodeDrainTimeout: "0s"
-      # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
-      # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
-      nodeVolumeDetachTimeout: "0s"
-
 machinePools:
   app:
     enabled: false
@@ -111,9 +67,47 @@ machinePools:
         # MachineType is the name of a Google Compute Engine
         # (https://cloud.google.com/compute/docs/machine-types).
         # If unspecified, the default machine type is `e2-medium`.
-        machineType: "n2-standard-2"
-        <<: *machinePoolsTemplateSpec
+        machineType: "e2-medium"
+        # LinuxNodeConfig specifies the settings for Linux agent nodes.
+        linuxNodeConfig:
+          cgroupMode: ~
+          sysctls: []
+        # Management specifies the node pool management options.
+        management:
+          # AutoRepair specifies whether the node auto-repair is enabled for the node
+          # pool. If enabled, the nodes in this node pool will be monitored and, if
+          # they fail health checks too many times, an automatic repair action will be
+          # triggered.
+          autoRepair: false
+          # AutoUpgrade specifies whether node auto-upgrade is enabled for the node
+          # pool. If enabled, node auto-upgrade helps keep the nodes in your node pool
+          # up to date with the latest release version of Kubernetes.
+          autoUpgrade: true
+        # MaxPodsPerNode is constraint enforced on the max num of pods per node.
+        maxPodsPerNode: 110
+        scaling:
+          enableAutoscaling: false
+        # NodeLocations is the list of zones in which the NodePool's nodes should be located.
+        # minItems 0 of type string
+        nodeLocations:
+          - "{{ $gcpRegion }}-a"
     replicas: 1
     spec:
       template:
-        <<: *machinePoolsTemplateSpecTemplate
+        metadata: {}
+        spec:
+          bootstrap:
+            # DataSecretName is the name of the secret that stores the bootstrap data script.
+            # If nil, the Machine should remain in the Pending state.
+            dataSecretName: ""
+          # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
+          # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
+          # Defaults to 10 seconds.
+          nodeDeletionTimeout: "10s"
+          # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
+          # The default value is 0, meaning that the node can be drained without any time limitations.
+          # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
+          nodeDrainTimeout: "0s"
+          # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
+          # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
+          nodeVolumeDetachTimeout: "0s"
