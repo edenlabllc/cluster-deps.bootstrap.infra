@@ -7,7 +7,7 @@
 ## Description
 
 This repository provides a general set of [Cluster API](https://cluster-api.sigs.k8s.io) and system components
-required to provision Kubernetes clusters for different providers.
+required for provisioning of Kubernetes clusters for different providers.
 It is inherited by other tenant repositories.
 Mainly, it is designed to be managed by administrators, DevOps engineers, SREs.
 
@@ -62,7 +62,7 @@ This example shows how the following options are configured and interact with ea
 rmk project generate \
     --environment=develop.root-domain=localhost \
     --owners=user \
-    --scopes=cluster-deps
+    --scopes=deps
 ```
 
 #### Initialization configuration
