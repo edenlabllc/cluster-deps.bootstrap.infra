@@ -1,0 +1,28 @@
+name: Prepare tenant Artifact with auto-tagging
+
+on:
+  push:
+    branches:
+      - staging
+      - production
+
+jobs:
+  tenant-artifact:
+    name: Checkout main repositories, create and upload tenant Artifact
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Create and upload tenant Artifact
+        uses: edenlabllc/tenant-artifact.ci.action@v1
+        with:
+          autotag: true
+          github_token_repo_full_access: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
+          skip_release_artifact: true
+          slack_notifications: true
+          slack_webhook: ${{ secrets.SLACK_WEBHOOK_RELEASES }}
+          slack_message_release_notes_path: docs/release-notes.md

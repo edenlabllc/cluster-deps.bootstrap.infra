@@ -1,0 +1,89 @@
+project:
+  spec:
+    environments:
+      develop:
+        root-domain: '*.edenlab.dev'
+      production:
+        root-domain: '*.edenlab.dev'
+      staging:
+        root-domain: '*.edenlab.dev'
+    owners:
+      - anovikov-el
+      - apanasiuk-el
+    scopes:
+      - deps
+
+inventory:
+  helm-plugins:
+    diff:
+      version: v3.8.1
+      url: https://github.com/databus23/helm-diff
+    helm-git:
+      version: v0.15.1
+      url: https://github.com/aslafy-z/helm-git
+    secrets:
+      version: v4.5.0
+      url: https://github.com/jkroepke/helm-secrets
+  hooks:
+    helmfile.hooks.infra:
+      version: v1.29.1
+      url: git::https://github.com/edenlabllc/{{.Name}}.git?ref={{.Version}}
+  tools:
+    clusterctl:
+      version: 1.7.4
+      url: https://github.com/kubernetes-sigs/cluster-api/releases/download/v{{.Version}}/{{.Name}}-{{.Os}}-amd64
+      os-linux: linux
+      os-mac: darwin
+      rename: true
+    kubectl:
+      version: 1.28.13
+      url: https://dl.k8s.io/release/v{{.Version}}/bin/{{.Os}}/amd64/{{.Name}}
+      checksum: https://dl.k8s.io/release/v{{.Version}}/bin/{{.Os}}/amd64/{{.Name}}.sha256
+      os-linux: linux
+      os-mac: darwin
+    helm:
+      version: 3.10.3
+      url: https://get.helm.sh/{{.Name}}-v{{.Version}}-{{.Os}}-amd64.tar.gz
+      checksum: https://get.helm.sh/{{.Name}}-v{{.Version}}-{{.Os}}-amd64.tar.gz.sha256sum
+      os-linux: linux
+      os-mac: darwin
+    helmfile:
+      version: 0.157.0
+      url: https://github.com/{{.Name}}/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}_{{.Version}}_{{.Os}}_amd64.tar.gz
+      checksum: https://github.com/{{.Name}}/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}_{{.Version}}_checksums.txt
+      os-linux: linux
+      os-mac: darwin
+    sops:
+      version: 3.8.1
+      url: https://github.com/getsops/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}-v{{.Version}}.{{.Os}}
+      os-linux: linux.amd64
+      os-mac: darwin
+      rename: true
+    age:
+      version: 1.1.1
+      url: https://github.com/FiloSottile/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}-v{{.Version}}-{{.Os}}-amd64.tar.gz
+      os-linux: linux
+      os-mac: darwin
+    k3d:
+      version: 5.7.3
+      url: https://github.com/k3d-io/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}-{{.Os}}-amd64
+      os-linux: linux
+      os-mac: darwin
+      rename: true
+    yq:
+      version: 4.35.2
+      url: https://github.com/mikefarah/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}_{{.Os}}_amd64
+      os-linux: linux
+      os-mac: darwin
+      rename: true
+    aws-iam-authenticator:
+      version: 0.6.27
+      url: https://github.com/kubernetes-sigs/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}_{{.Version}}_{{.Os}}_amd64
+      os-linux: linux
+      os-mac: darwin
+      rename: true
+    gke-auth-plugin:
+      version: 0.1.1
+      url: https://github.com/traviswt/{{.Name}}/releases/download/{{.Version}}/{{.Name}}_{{.Os}}_x86_64.tar.gz
+      os-linux: Linux
+      os-mac: Darwin

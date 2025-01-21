@@ -1,0 +1,113 @@
+{{- $gcpRegion := env "GCP_REGION" }}
+
+# Default values for gcp-cluster.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## GKE cluster configuration
+cluster:
+  ## The name of the cluster, required
+  name: {{ env "NAME" }}
+
+  # Project is the name of the project to deploy the cluster to, required.
+  project: {{ env "GCP_PROJECT_ID" }}
+
+  region: {{ $gcpRegion }}
+  managed:
+    spec:
+      # NetworkSpec encapsulates all things related to the GCP network.
+      network:
+        # Name is the name of the network to be used.
+        # The default name is "default"
+        name: "default"
+  spec:
+    # Cluster network configuration.
+    clusterNetwork:
+      # # APIServerPort specifies the port the API Server should bind to.
+      # # Defaults to 6443.
+      apiServerPort: 443
+      # The network ranges from which Pod networks are allocated.
+      pods:
+        cidrBlocks:
+          - 192.168.0.0/16
+
+controlPlane:
+  spec:
+    clusterNetwork:
+      privateCluster:
+        enablePrivateNodes: true
+    releaseChannel: "stable"
+    version: "v1.30.5"
+
+machinePools:
+  app:
+    enabled: false
+    annotations: {}
+    labels: {}
+    managed:
+      spec:
+        # AdditionalLabels is an optional set of tags to add to GCP resources managed by the GCP provider, in addition to the ones added by default.
+        additionalLabels: {}
+        # DiskSizeGb is the size of the disk attached to each node, specified in GB.
+        # The smallest allowed disk size is 10GB. If unspecified, the default disk size is 100GB.
+        diskSizeGb: 10
+        # DiskType is type of the disk attached to each node.
+        # "pd-standard", "pd-ssd", "pd-balanced"
+        diskType: "pd-ssd"
+        # KubernetesLabels specifies the labels to apply to the nodes of the node pool.
+        kubernetesLabels:
+          db: app
+        # KubernetesTaints specifies the taints to apply to the nodes of the node pool.
+        kubernetesTaints: []
+          # - effect: "NoSchedule" # "NoSchedule", "NoExecute", "PreferNoSchedule"
+          #   # Key is the key of the taint
+          #   key: "key"
+          #   # Value is the value of the taint
+          #   value: "string"
+        # MachineType is the name of a Google Compute Engine
+        # (https://cloud.google.com/compute/docs/machine-types).
+        # If unspecified, the default machine type is `e2-medium`.
+        machineType: "e2-medium"
+        # LinuxNodeConfig specifies the settings for Linux agent nodes.
+        linuxNodeConfig:
+          cgroupMode: ~
+          sysctls: []
+        # Management specifies the node pool management options.
+        management:
+          # AutoRepair specifies whether the node auto-repair is enabled for the node
+          # pool. If enabled, the nodes in this node pool will be monitored and, if
+          # they fail health checks too many times, an automatic repair action will be
+          # triggered.
+          autoRepair: false
+          # AutoUpgrade specifies whether node auto-upgrade is enabled for the node
+          # pool. If enabled, node auto-upgrade helps keep the nodes in your node pool
+          # up to date with the latest release version of Kubernetes.
+          autoUpgrade: true
+        # MaxPodsPerNode is constraint enforced on the max num of pods per node.
+        maxPodsPerNode: 110
+        scaling:
+          enableAutoscaling: false
+        # NodeLocations is the list of zones in which the NodePool's nodes should be located.
+        # minItems 0 of type string
+        nodeLocations:
+          - "{{ $gcpRegion }}-a"
+    replicas: 1
+    spec:
+      template:
+        metadata: {}
+        spec:
+          bootstrap:
+            # DataSecretName is the name of the secret that stores the bootstrap data script.
+            # If nil, the Machine should remain in the Pending state.
+            dataSecretName: ""
+          # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
+          # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
+          # Defaults to 10 seconds.
+          nodeDeletionTimeout: "10s"
+          # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
+          # The default value is 0, meaning that the node can be drained without any time limitations.
+          # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
+          nodeDrainTimeout: "0s"
+          # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
+          # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
+          nodeVolumeDetachTimeout: "0s"

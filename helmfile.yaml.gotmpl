@@ -1,0 +1,241 @@
+environments:
+  develop:
+    missingFileHandler: Warn
+    values:
+      - etc/deps/{{ .Environment.Name }}/globals.yaml
+      - etc/deps/{{ .Environment.Name }}/globals.yaml.gotmpl
+      - etc/deps/{{ .Environment.Name }}/releases.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - etc/deps/{{ .Environment.Name }}/values/k3d/releases.yaml
+      {{- end }}
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/globals.yaml
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/globals.yaml.gotmpl
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/releases.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/values/k3d/releases.yaml
+      {{- end }}
+  production:
+    missingFileHandler: Warn
+    values:
+      - etc/deps/{{ .Environment.Name }}/globals.yaml
+      - etc/deps/{{ .Environment.Name }}/globals.yaml.gotmpl
+      - etc/deps/{{ .Environment.Name }}/releases.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - etc/deps/{{ .Environment.Name }}/values/k3d/releases.yaml
+      {{- end }}
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/globals.yaml
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/globals.yaml.gotmpl
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/releases.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/values/k3d/releases.yaml
+      {{- end }}
+  staging:
+    missingFileHandler: Warn
+    values:
+      - etc/deps/{{ .Environment.Name }}/globals.yaml
+      - etc/deps/{{ .Environment.Name }}/globals.yaml.gotmpl
+      - etc/deps/{{ .Environment.Name }}/releases.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - etc/deps/{{ .Environment.Name }}/values/k3d/releases.yaml
+      {{- end }}
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/globals.yaml
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/globals.yaml.gotmpl
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/releases.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - {{ requiredEnv "PWD" }}/etc/deps/{{ .Environment.Name }}/values/k3d/releases.yaml
+      {{- end }}
+---
+repositories:
+- name: core-charts
+  url: https://edenlabllc-core-charts-infra.s3.eu-north-1.amazonaws.com
+
+helmDefaults:
+  wait: true
+  waitForJobs: true
+  timeout: 3600
+
+# The set of paths for inherited helmfiles is controlled through the version.yaml file using rmk.
+# DO NOT EDIT field helmfiles values.
+helmfiles: {{ env "HELMFILE_CLUSTER_DEPS_PATHS" }}
+
+missingFileHandler: Warn
+
+commonLabels:
+  downstreamTenant: deps.bootstrap.infra
+  scope: deps
+  bin: {{ env "HELMFILE_CLUSTER_DEPS_HOOKS_DIR" }}/bin
+  repo: core-charts
+  appChartVersion: 1.6.0
+
+templates:
+  release:
+    createNamespace: true
+    labels:
+      app: "{{`{{ .Release.Name }}`}}"
+    missingFileHandler: Warn
+    values:
+      - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
+      - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl
+      - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml
+      - ../{{`{{ .Release.Labels.downstreamTenant }}`}}-*/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
+      - ../{{`{{ .Release.Labels.downstreamTenant }}`}}-*/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl
+      - ../{{`{{ .Release.Labels.downstreamTenant }}`}}-*/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
+      - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl
+      - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}.yaml
+      {{- end }}
+      - {{ requiredEnv "PWD" }}/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
+      - {{ requiredEnv "PWD" }}/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl
+      - {{ requiredEnv "PWD" }}/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml
+      {{- if eq (env "K3D_CLUSTER") "true" }}
+      - {{ requiredEnv "PWD" }}/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
+      - {{ requiredEnv "PWD" }}/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl
+      - {{ requiredEnv "PWD" }}/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}.yaml
+      {{- end }}
+    secrets:
+      - {{ requiredEnv "PWD" }}/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/secrets/{{`{{ .Release.Name }}`}}.yaml
+
+releases:
+  - name: capi-cluster
+    namespace: kube-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/k3d-cluster"
+    version: 0.1.0
+    labels:
+      cluster: capi
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    inherit:
+      - template: release
+
+  - name: clusterctl-config
+    namespace: kube-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/clusterctl-config"
+    version: 0.1.2
+    labels:
+      config: clusterctl
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    inherit:
+      - template: release
+
+  - name: k3d-cluster
+    namespace: kube-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/k3d-cluster"
+    version: 0.1.0
+    labels:
+      cluster: k3d
+{{/* TODO: Will be restored to {{ eq (env "K3D_CLUSTER" | default "false") "true" }} state after transition to support Cluster API */}}
+    installed: {{ and (eq (.Values | get (print "k3d-cluster" ".enabled") false) true) (eq (env "K3D_CLUSTER" | default "false") "true") }}
+    inherit:
+      - template: release
+
+  - name: aws-iam-controller
+    namespace: capa-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/iam-chart"
+    version: 1.3.13
+    labels:
+      cluster: aws
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    inherit:
+      - template: release
+
+  - name: aws-iam-provision-operator
+    namespace: capa-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/app"
+    version: "{{`{{ .Release.Labels.appChartVersion }}`}}"
+    labels:
+      cluster: aws
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    inherit:
+      - template: release
+
+  - name: aws-iam-config
+    namespace: capa-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/aws-iam-config"
+    version: 0.1.0
+    labels:
+      cluster: aws
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    needs:
+      - aws-iam-controller
+    inherit:
+      - template: release
+    {{- with .Values | get (print "hooks." "aws-iam-config") "" }}
+    hooks:
+      {{- range $name, $hook := . }}
+      - name: {{ $name }}
+        {{- toYaml $hook | nindent 8 }}
+      {{- end }}
+    {{- end }}
+
+  - name: aws-cluster
+    namespace: capa-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/aws-cluster"
+    version: 0.2.1
+    labels:
+      cluster: aws
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    needs:
+      - aws-iam-config
+      - aws-iam-provision-operator
+    inherit:
+      - template: release
+    {{- with .Values | get (print "hooks." "aws-cluster") "" }}
+    hooks:
+      {{- range $name, $hook := . }}
+      - name: {{ $name }}
+        {{- toYaml $hook | nindent 8 }}
+      {{- end }}
+    {{- end }}
+
+  - name: aws-iam-provision
+    namespace: capa-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/aws-iam-provision"
+    version: 0.1.0
+    labels:
+      cluster: aws
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    needs:
+      - aws-cluster
+    inherit:
+      - template: release
+    {{- with .Values | get (print "hooks." "aws-iam-provision") "" }}
+    hooks:
+      {{- range $name, $hook := . }}
+      - name: {{ $name }}
+        {{- toYaml $hook | nindent 8 }}
+      {{- end }}
+    {{- end }}
+
+  - name: azure-cluster
+    namespace: capz-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/azure-cluster"
+    version: 0.2.3
+    labels:
+      cluster: azure
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    inherit:
+      - template: release
+    {{- with .Values | get (print "hooks." "azure-cluster") "" }}
+    hooks:
+      {{- range $name, $hook := . }}
+      - name: {{ $name }}
+        {{- toYaml $hook | nindent 8 }}
+      {{- end }}
+    {{- end }}
+
+  - name: gcp-cluster
+    namespace: capg-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/gcp-cluster"
+    version: 0.2.1
+    labels:
+      cluster: gcp
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    inherit:
+      - template: release
+    {{- with .Values | get (print "hooks." "gcp-cluster") "" }}
+    hooks:
+      {{- range $name, $hook := . }}
+      - name: {{ $name }}
+        {{- toYaml $hook | nindent 8 }}
+      {{- end }}
+    {{- end }}
