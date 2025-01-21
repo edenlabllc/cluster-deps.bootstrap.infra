@@ -1,0 +1,7 @@
+# This file defines the release list, is located in the environment directory
+# of a specific releases scope: etc/<releases scope>/<environment>/releases.yaml.
+# The absence of this file in the environment directory means that the entire list of releases will be installed.
+# Set false to uninstall this release on sync.
+
+k3d-cluster:
+  enabled: false

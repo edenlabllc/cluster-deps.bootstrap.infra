@@ -1,0 +1,32 @@
+clusterName: ${K3D_NAME} # name that you want to give to your cluster (will still be prefixed with `k3d-`)
+
+volumes: ~
+ports: ~
+files: ~
+
+options:
+  k3d: # k3d runtime settings
+    disableLoadbalancer: true # same as `--no-lb`
+    disableRollback: true # same as `--no-Rollback`
+  k3s: # options passed on to K3s itself
+    extraArgs: # additional arguments passed to the `k3s server|agent` command; same as `--k3s-arg`
+      syncFrequency:
+        arg: --kubelet-arg=--sync-frequency=5s
+        nodeFilters:
+          - all
+      fileCheckFrequency:
+        arg: --kubelet-arg=--file-check-frequency=5s
+        nodeFilters:
+          - all
+      disableTraefik:
+        arg: --disable=traefik
+        nodeFilters:
+          - all
+      disableLocalStorage:
+        arg: --disable=local-storage
+        nodeFilters:
+          - all
+      disableMetricsServer:
+        arg: --disable=metrics-server
+        nodeFilters:
+          - all
