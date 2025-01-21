@@ -1,0 +1,125 @@
+# This file defines the globals configuration list for values different releases, 
+# is located in the environment directory of a specific releases scope: etc/<releases scope>/<environment>/globals.yaml.gotmpl.
+# This configuration allows you to use the same values in value files of different releases only in the same scope.
+
+# configs - enumeration of configurations divided into sets related to Kubernetes ConfigMaps
+configs:
+  linkerd:
+    # enable/disable linkerd-await at runtime: true|false
+    await: true
+    # enable/disable linkerd sidecar injection: enabled|disabled
+    inject: enabled
+
+# envs - enumeration of environment variables divided into sets related to Kubernetes environment variables for container
+envs: {}
+
+# hooks - enumeration of environment variables divided into sets related to helmfile hooks arguments
+hooks:
+  aws-cluster:
+    aws-cluster-postsync-hook:
+      events:
+        - postsync
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/aws-cluster-postsync-hook.sh"
+      args:
+        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    aws-cluster-preuninstall-hook:
+      events:
+        - preuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/aws-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    aws-cluster-postuninstall-hook:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/aws-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+        - "true"
+  aws-iam-config:
+    aws-iam-config-postsync-hook:
+      events:
+        - postsync
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/aws-iam-config-postsync-hook.sh"
+      args:
+        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+  aws-iam-provision:
+    aws-iam-provision-postsync-hook:
+      events:
+        - postsync
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/aws-iam-provision-postsync-hook.sh"
+      args:
+        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+  azure-cluster:
+    azure-cluster-postsync-hook:
+      events:
+        - postsync
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/azure-cluster-postsync-hook.sh"
+      args:
+        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    azure-cluster-preuninstall-hook:
+      events:
+        - preuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/azure-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    azure-cluster-postuninstall-hook:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/azure-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+        - "true"
+  gcp-cluster:
+    # TODO: The hook is needed for resolving the issue with empty kubernetesTaints values for GKE machines pools.
+    #       This temporary solution may be deprecated in the subsequent releases.
+    #       https://github.com/kubernetes-sigs/cluster-api-provider-gcp/pull/1371
+    gcp-cluster-presync-hook:
+      events:
+        - presync
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-presync-hook.sh"
+      args:
+        - "{{`{{ .Release.Namespace }}`}}"
+        - public.ecr.aws/edenlabllc/core.cluster-api-gcp-controller
+        - v1.8.1
+    gcp-cluster-postsync-hook:
+      events:
+        - postsync
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-postsync-hook.sh"
+      args:
+        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    gcp-cluster-preuninstall-hook:
+      events:
+        - preuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    gcp-cluster-postuninstall-hook:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+        - "true"

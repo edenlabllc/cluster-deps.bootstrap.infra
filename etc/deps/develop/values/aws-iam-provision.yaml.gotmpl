@@ -1,0 +1,35 @@
+# EKS cluster name (required)
+eksClusterName: {{ env "NAME" }}
+
+roles:
+  {{ env "NAME" }}-ebs-csi-controller:
+    spec:
+      assumeRolePolicyDocument: |
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "{{`{{ .OIDCProviderARN }}`}}"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "{{`{{ .OIDCProviderName }}`}}:sub": "system:serviceaccount:kube-system:ebs-csi-controller"
+                }
+              }
+            }
+          ]
+        }
+      maxSessionDuration: 3600
+      name: {{ env "NAME" }}-ebs-csi-controller
+      path: /
+      policyRefs:
+        - from:
+            name: {{ env "NAME" }}-ebs-csi-controller-core
+            namespace: {{ .Release.Namespace }}
+        - from:
+            name: {{ env "NAME" }}-ebs-csi-controller-kms
+            namespace: {{ .Release.Namespace }}
