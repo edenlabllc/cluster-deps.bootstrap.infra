@@ -61,6 +61,7 @@ helmfiles: {{ env "HELMFILE_CLUSTER_DEPS_PATHS" }}
 missingFileHandler: Warn
 
 commonLabels:
+  downstreamTenant: deps.bootstrap.infra
   scope: deps
   bin: {{ env "HELMFILE_CLUSTER_DEPS_HOOKS_DIR" }}/bin
   repo: core-charts
@@ -76,6 +77,9 @@ templates:
       - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
       - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl
       - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml
+      - ../{{`{{ .Release.Labels.downstreamTenant }}`}}-*/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
+      - ../{{`{{ .Release.Labels.downstreamTenant }}`}}-*/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl
+      - ../{{`{{ .Release.Labels.downstreamTenant }}`}}-*/etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/{{`{{ .Release.Name }}`}}.yaml
       {{- if eq (env "K3D_CLUSTER") "true" }}
       - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}-ingress-route.yaml.gotmpl
       - etc/{{`{{ .Release.Labels.scope }}`}}/{{`{{ .Environment.Name }}`}}/values/k3d/values/{{`{{ .Release.Name }}`}}.yaml.gotmpl

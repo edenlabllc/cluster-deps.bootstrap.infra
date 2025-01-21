@@ -1,9 +1,15 @@
 # cluster-deps.bootstrap.infra
 
+[![Release](https://img.shields.io/github/v/release/edenlabllc/cluster-deps.bootstrap.infra.svg?style=for-the-badge)](https://github.com/edenlabllc/cluster-deps.bootstrap.infra/releases/latest)
+[![Software License](https://img.shields.io/github/license/edenlabllc/cluster-deps.bootstrap.infra.svg?style=for-the-badge)](LICENSE)
+[![Powered By: Edenlab](https://img.shields.io/badge/powered%20by-edenlab-8A2BE2.svg?style=for-the-badge)](https://edenlab.io)
+
 ## Description
 
-The repository designed for the rapid setup and deployment of the infrastructure required for the cluster-deps project. 
-This project includes scripts, configurations, and instructions to automate the deployment of necessary services and dependencies.
+This repository provides a general set of [Cluster API](https://cluster-api.sigs.k8s.io) and system components
+required to provision Kubernetes clusters for different providers.
+It is inherited by other tenant repositories.
+Mainly, it is designed to be managed by administrators, DevOps engineers, SREs.
 
 ## Getting Started
 
@@ -12,8 +18,7 @@ Detailed information about requirements and installation instructions can be fou
 
 ### Requirements
 
-- Git 
-- GitHub PAT to access the repositories listed in the `dependencies` section of `project.yaml`
+- Git
 - Note: K3D v5.x.x requires at least Docker v20.10.5 (runc >= v1.0.0-rc93) to work properly
 - [RMK CLI](https://edenlabllc.github.io/rmk/latest)
 
@@ -66,10 +71,10 @@ rmk project generate \
 rmk config init
 ```
 
-#### Create K3D cluster
+#### Create CAPI cluster
 
 ```shell
-rmk cluster k3d create
+rmk cluster capi create
 ```
 
 #### Release sync
