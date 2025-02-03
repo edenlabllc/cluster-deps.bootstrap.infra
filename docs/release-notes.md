@@ -1,5 +1,22 @@
 # Deps Release Notes
 
+## Release v0.2.0
+
+## What's new
+- Added K3D cluster configuration values, for example.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.1.0
 
 ## What's new
