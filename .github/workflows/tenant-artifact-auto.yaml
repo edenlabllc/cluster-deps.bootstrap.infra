@@ -17,8 +17,16 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
 
+      - name: Checkout tenant-artifact action repository
+        uses: actions/checkout@v4
+        with:
+          repository: edenlabllc/tenant-artifact.ci.action
+          ref: v1
+          token: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
+          path: .github/actions/tenant-artifact
+
       - name: Create and upload tenant Artifact
-        uses: edenlabllc/tenant-artifact.ci.action@v1
+        uses: ./.github/actions/tenant-artifact
         with:
           autotag: true
           github_token_repo_full_access: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}

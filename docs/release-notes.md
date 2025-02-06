@@ -1,5 +1,33 @@
 # Deps Release Notes
 
+## Release v0.2.0
+
+## What's new
+- Added example K3D cluster configuration values.
+- Updated `GCP GKE` control plane version to `v1.30.8`.
+- Changed the sequence of launching releases for `aws-iam-config`.
+- Updated charts for releases: `aws-iam-config`, `aws-iam-controller`.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+```yaml
+  - name: aws-iam-config
+    chart: core-charts/aws-iam-config
+    version: 0.2.0
+  - name: aws-iam-controller
+    chart: core-charts/iam-chart
+    version: 1.3.15
+```
+
+### List of added releases
+
+---
+
 ## Release v0.1.0
 
 ## What's new

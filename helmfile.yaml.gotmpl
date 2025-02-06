@@ -131,7 +131,7 @@ releases:
   - name: aws-iam-controller
     namespace: capa-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/iam-chart"
-    version: 1.3.13
+    version: 1.3.15
     labels:
       cluster: aws
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
@@ -148,25 +148,6 @@ releases:
     inherit:
       - template: release
 
-  - name: aws-iam-config
-    namespace: capa-system
-    chart: "{{`{{ .Release.Labels.repo }}`}}/aws-iam-config"
-    version: 0.1.0
-    labels:
-      cluster: aws
-    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
-    needs:
-      - aws-iam-controller
-    inherit:
-      - template: release
-    {{- with .Values | get (print "hooks." "aws-iam-config") "" }}
-    hooks:
-      {{- range $name, $hook := . }}
-      - name: {{ $name }}
-        {{- toYaml $hook | nindent 8 }}
-      {{- end }}
-    {{- end }}
-
   - name: aws-cluster
     namespace: capa-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/aws-cluster"
@@ -175,11 +156,31 @@ releases:
       cluster: aws
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
     needs:
-      - aws-iam-config
+      - aws-iam-controller
       - aws-iam-provision-operator
     inherit:
       - template: release
     {{- with .Values | get (print "hooks." "aws-cluster") "" }}
+    hooks:
+      {{- range $name, $hook := . }}
+      - name: {{ $name }}
+        {{- toYaml $hook | nindent 8 }}
+      {{- end }}
+    {{- end }}
+
+  - name: aws-iam-config
+    namespace: capa-system
+    chart: "{{`{{ .Release.Labels.repo }}`}}/aws-iam-config"
+    version: 0.2.0
+    labels:
+      cluster: aws
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    needs:
+      - aws-cluster
+      - aws-iam-controller
+    inherit:
+      - template: release
+    {{- with .Values | get (print "hooks." "aws-iam-config") "" }}
     hooks:
       {{- range $name, $hook := . }}
       - name: {{ $name }}
@@ -196,6 +197,8 @@ releases:
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
     needs:
       - aws-cluster
+      - aws-iam-config
+      - aws-iam-provision-operator
     inherit:
       - template: release
     {{- with .Values | get (print "hooks." "aws-iam-provision") "" }}

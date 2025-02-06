@@ -1,5 +1,9 @@
 policies:
   {{ env "NAME" }}-ebs-csi-controller-core:
+    resourceAdoption:
+      enabled: false
+      arn: '{"arn": "arn:aws:iam::{{ env "AWS_ACCOUNT_ID" }}:policy/{{ env "NAME" }}-ebs-csi-controller-core"}'
+      deletionPolicy: retain
     spec:
       policyDocument: |
         {
@@ -148,6 +152,10 @@ policies:
             "Version": "2012-10-17"
         }
   {{ env "NAME" }}-ebs-csi-controller-kms:
+    resourceAdoption:
+      enabled: false
+      arn: '{"arn": "arn:aws:iam::{{ env "AWS_ACCOUNT_ID" }}:policy/{{ env "NAME" }}-ebs-csi-controller-kms"}'
+      deletionPolicy: retain
     spec:
       policyDocument: |
         {
