@@ -33,3 +33,4 @@ jobs:
           slack_notifications: true
           slack_webhook: ${{ secrets.SLACK_WEBHOOK_RELEASES }}
           slack_message_release_notes_path: docs/release-notes.md
+          rmk_version: v0.45.0-rc
