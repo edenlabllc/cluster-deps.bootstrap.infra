@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: edenlabllc/tenant-artifact.ci.action
-          ref: v1
+          ref: v2
           token: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
           path: .github/actions/tenant-artifact
 
@@ -30,7 +30,7 @@ jobs:
         with:
           autotag: true
           github_token_repo_full_access: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
-          skip_release_artifact: true
           slack_notifications: true
           slack_webhook: ${{ secrets.SLACK_WEBHOOK_RELEASES }}
           slack_message_release_notes_path: docs/release-notes.md
+          rmk_version: v0.45.0-rc
