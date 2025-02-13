@@ -3,7 +3,7 @@
 ## Release v0.3.0
 
 ## What's new
-- Bumped `tenant-artifact` github action version to `v2` for create tenant release.
+- Bumped `tenant-artifact` GitHub Action to `v2` for tenant release with the new RMK version.
 
 ## Bug fixes
 
