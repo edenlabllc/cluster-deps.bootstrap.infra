@@ -1,5 +1,22 @@
 # Deps Release Notes
 
+## Release v0.3.0
+
+## What's new
+- Bumped `tenant-artifact` github action version to `v2` for create and upload tenant release.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.2.0
 
 ## What's new
