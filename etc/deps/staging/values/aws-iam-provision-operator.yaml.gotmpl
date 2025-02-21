@@ -49,6 +49,102 @@ global:
                     description: AWSIAMProvisionSpec defines the desired state of AWSIAMProvision.
                     properties:
                       eksClusterName:
+                        description: EKSClusterName - target cluster name provisioned Cluster
+                          API.
+                        type: string
+                      frequency:
+                        description: |-
+                          Frequency - AWS IAM resources synchronization frequency.
+                          It is not recommended to set values below 30s to avoid being blocked by the AWS API.
+                        type: string
+                      policies:
+                        additionalProperties:
+                          properties:
+                            spec:
+                              description: |-
+                                PolicySpec defines the desired state of Policy.
+
+                                Contains information about a managed policy.
+
+                                This data type is used as a response element in the CreatePolicy, GetPolicy,
+                                and ListPolicies operations.
+
+                                For more information about managed policies, refer to Managed policies and
+                                inline policies (https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html)
+                                in the IAM User Guide.
+                              properties:
+                                name:
+                                  description: |-
+                                    The friendly name of the policy.
+
+                                    IAM user, group, role, and policy names must be unique within the account.
+                                    Names are not distinguished by case. For example, you cannot create resources
+                                    named both "MyResource" and "myresource".
+                                  type: string
+                                policyDocument:
+                                  description: |-
+                                    The JSON policy document that you want to use as the content for the new
+                                    policy.
+
+                                    You must provide policies in JSON format in IAM. However, for CloudFormation
+                                    templates formatted in YAML, you can provide the policy in JSON or YAML format.
+                                    CloudFormation always converts a YAML policy to JSON format before submitting
+                                    it to IAM.
+
+                                    The maximum length of the policy document that you can pass in this operation,
+                                    including whitespace, is listed below. To view the maximum character counts
+                                    of a managed policy with no whitespaces, see IAM and STS character quotas
+                                    (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-quotas.html#reference_iam-quotas-entity-length).
+
+                                    To learn more about JSON policy grammar, see Grammar of the IAM JSON policy
+                                    language (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_grammar.html)
+                                    in the IAM User Guide.
+
+                                    The regex pattern (http://wikipedia.org/wiki/regex) used to validate this
+                                    parameter is a string of characters consisting of the following:
+
+                                      - Any printable ASCII character ranging from the space character (\u0020)
+                                        through the end of the ASCII character range
+
+                                      - The printable characters in the Basic Latin and Latin-1 Supplement character
+                                        set (through \u00FF)
+
+                                      - The special characters tab (\u0009), line feed (\u000A), and carriage
+                                        return (\u000D)
+                                  type: string
+                                tags:
+                                  description: |-
+                                    A list of tags that you want to attach to the new IAM customer managed policy.
+                                    Each tag consists of a key name and an associated value. For more information
+                                    about tagging, see Tagging IAM resources (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html)
+                                    in the IAM User Guide.
+
+                                    If any one of the tags is invalid or if you exceed the allowed maximum number
+                                    of tags, then the entire request fails and the resource is not created.
+                                  items:
+                                    description: |-
+                                      Tag A structure that represents user-provided metadata that can be associated
+                                      with an IAM resource. For more information about tagging, see Tagging IAM
+                                      resources (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html)
+                                      in the IAM User Guide.
+                                    properties:
+                                      key:
+                                        type: string
+                                      value:
+                                        type: string
+                                    type: object
+                                  type: array
+                              required:
+                                - name
+                                - policyDocument
+                              type: object
+                          required:
+                            - spec
+                          type: object
+                        description: Policies - map of policies with specifications.
+                        type: object
+                      region:
+                        description: Region for AWS config authentication.
                         type: string
                       roles:
                         additionalProperties:
@@ -84,31 +180,6 @@ global:
 
                                     Upon success, the response includes the same trust policy in JSON format.
                                   type: string
-                                description:
-                                  description: A description of the role.
-                                  type: string
-                                inlinePolicies:
-                                  additionalProperties:
-                                    type: string
-                                  type: object
-                                maxSessionDuration:
-                                  description: |-
-                                    The maximum session duration (in seconds) that you want to set for the specified
-                                    role. If you do not specify a value for this setting, the default value of
-                                    one hour is applied. This setting can have a value from 1 hour to 12 hours.
-
-                                    Anyone who assumes the role from the CLI or API can use the DurationSeconds
-                                    API parameter or the duration-seconds CLI parameter to request a longer session.
-                                    The MaxSessionDuration setting determines the maximum duration that can be
-                                    requested using the DurationSeconds parameter. If users don't specify a value
-                                    for the DurationSeconds parameter, their security credentials are valid for
-                                    one hour by default. This applies when you use the AssumeRole* API operations
-                                    or the assume-role* CLI operations but does not apply when you use those
-                                    operations to create a console URL. For more information, see Using IAM roles
-                                    (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html) in the
-                                    IAM User Guide.
-                                  format: int64
-                                  type: integer
                                 name:
                                   description: |-
                                     The name of the role to create.
@@ -121,76 +192,11 @@ global:
                                     a string of characters consisting of upper and lowercase alphanumeric characters
                                     with no spaces. You can also include any of the following characters: _+=,.@-
                                   type: string
-                                path:
-                                  description: |-
-                                    The path to the role. For more information about paths, see IAM Identifiers
-                                    (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html)
-                                    in the IAM User Guide.
-
-                                    This parameter is optional. If it is not included, it defaults to a slash
-                                    (/).
-
-                                    This parameter allows (through its regex pattern (http://wikipedia.org/wiki/regex))
-                                    a string of characters consisting of either a forward slash (/) by itself
-                                    or a string that must begin and end with forward slashes. In addition, it
-                                    can contain any ASCII character from the ! (\u0021) through the DEL character
-                                    (\u007F), including most punctuation characters, digits, and upper and lowercased
-                                    letters.
-                                  type: string
-                                permissionsBoundary:
-                                  description: |-
-                                    The ARN of the managed policy that is used to set the permissions boundary
-                                    for the role.
-
-                                    A permissions boundary policy defines the maximum permissions that identity-based
-                                    policies can grant to an entity, but does not grant permissions. Permissions
-                                    boundaries do not define the maximum permissions that a resource-based policy
-                                    can grant to an entity. To learn more, see Permissions boundaries for IAM
-                                    entities (https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html)
-                                    in the IAM User Guide.
-
-                                    For more information about policy types, see Policy types (https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types)
-                                    in the IAM User Guide.
-                                  type: string
-                                permissionsBoundaryRef:
-                                  description: "AWSResourceReferenceWrapper provides a wrapper
-                                  around *AWSResourceReference\ntype to provide more user
-                                  friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t
-                                  \ name: my-api"
-                                  properties:
-                                    from:
-                                      description: |-
-                                        AWSResourceReference provides all the values necessary to reference another
-                                        k8s resource for finding the identifier(Id/ARN/Name)
-                                      properties:
-                                        name:
-                                          type: string
-                                        namespace:
-                                          type: string
-                                      type: object
-                                  type: object
                                 policies:
+                                  description: A list of policies that you want to attach
+                                    to the new role.
                                   items:
                                     type: string
-                                  type: array
-                                policyRefs:
-                                  items:
-                                    description: "AWSResourceReferenceWrapper provides a wrapper
-                                    around *AWSResourceReference\ntype to provide more user
-                                    friendly syntax for references using 'from' field\nEx:\nAPIIDRef:\n\n\tfrom:\n\t
-                                    \ name: my-api"
-                                    properties:
-                                      from:
-                                        description: |-
-                                          AWSResourceReference provides all the values necessary to reference another
-                                          k8s resource for finding the identifier(Id/ARN/Name)
-                                        properties:
-                                          name:
-                                            type: string
-                                          namespace:
-                                            type: string
-                                        type: object
-                                    type: object
                                   type: array
                                 tags:
                                   description: |-
@@ -203,7 +209,7 @@ global:
                                     of tags, then the entire request fails and the resource is not created.
                                   items:
                                     description: |-
-                                      A structure that represents user-provided metadata that can be associated
+                                      Tag A structure that represents user-provided metadata that can be associated
                                       with an IAM resource. For more information about tagging, see Tagging IAM
                                       resources (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html)
                                       in the IAM User Guide.
@@ -221,10 +227,11 @@ global:
                           required:
                             - spec
                           type: object
+                        description: Roles - map of roles with specifications.
                         type: object
                     required:
                       - eksClusterName
-                      - roles
+                      - region
                     type: object
                   status:
                     description: AWSIAMProvisionStatus defines the observed state of AWSIAMProvision.
@@ -236,19 +243,27 @@ global:
                         type: string
                       phase:
                         type: string
-                      roles:
-                        additionalProperties:
-                          description: AWSIAMProvisionStatusRole defines the observed state
-                            of AWSIAMProvision's roles.
+                      policies:
+                        items:
+                          description: AWSIAMProvisionStatusPolicy defines the observed state
+                            of AWSIAMProvision's policies.
                           properties:
                             message:
+                              type: string
+                            name:
                               type: string
                             phase:
                               type: string
                             status:
-                              description: RoleStatus defines the observed state of Role
+                              description: PolicyStatus defines the observed state of Policy
                               properties:
-                                ackResourceMetadata:
+                                attachmentCount:
+                                  description: |-
+                                    The number of entities (users, groups, and roles) that the policy is attached
+                                    to.
+                                  format: int32
+                                  type: integer
+                                awsIAMResourceMetadata:
                                   description: |-
                                     All CRs managed by ACK have a common `Status.ACKResourceMetadata` member
                                     that is used to contain resource sync state, account ownership,
@@ -262,7 +277,6 @@ global:
                                         when it has verified that an "adopted" resource (a resource where the
                                         ARN annotation was set by the Kubernetes user on the CR) exists and
                                         matches the supplied CR's Spec field values.
-                                        https://github.com/aws/aws-controllers-k8s/issues/270
                                       type: string
                                     ownerAccountID:
                                       description: |-
@@ -277,42 +291,68 @@ global:
                                     - ownerAccountID
                                     - region
                                   type: object
-                                conditions:
+                                createDate:
                                   description: |-
-                                    All CRS managed by ACK have a common `Status.Conditions` member that
-                                    contains a collection of `ackv1alpha1.Condition` objects that describe
-                                    the various terminal states of the CR and its backend AWS service API
-                                    resource
-                                  items:
-                                    description: |-
-                                      Condition is the common struct used by all CRDs managed by ACK service
-                                      controllers to indicate terminal states  of the CR and its backend AWS
-                                      service API resource
-                                    properties:
-                                      lastTransitionTime:
-                                        description: Last time the condition transitioned
-                                          from one status to another.
-                                        format: date-time
-                                        type: string
-                                      message:
-                                        description: A human readable message indicating details
-                                          about the transition.
-                                        type: string
-                                      reason:
-                                        description: The reason for the condition's last transition.
-                                        type: string
-                                      status:
-                                        description: Status of the condition, one of True,
-                                          False, Unknown.
-                                        type: string
-                                      type:
-                                        description: Type is the type of the Condition
-                                        type: string
-                                    required:
-                                      - status
-                                      - type
-                                    type: object
-                                  type: array
+                                    The date and time, in ISO 8601 date-time format (http://www.iso.org/iso/iso8601),
+                                    when the policy was created.
+                                  format: date-time
+                                  type: string
+                                defaultVersionID:
+                                  description: The identifier for the version of the policy
+                                    that is set as the default version.
+                                  type: string
+                                policyID:
+                                  description: |-
+                                    The stable and unique string identifying the policy.
+
+                                    For more information about IDs, see IAM identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html)
+                                    in the IAM User Guide.
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                      roles:
+                        items:
+                          description: AWSIAMProvisionStatusRole defines the observed state
+                            of AWSIAMProvision's roles.
+                          properties:
+                            message:
+                              type: string
+                            name:
+                              type: string
+                            phase:
+                              type: string
+                            status:
+                              description: RoleStatus defines the observed state of Role
+                              properties:
+                                awsIAMResourceMetadata:
+                                  description: |-
+                                    All CRs managed by ACK have a common `Status.ACKResourceMetadata` member
+                                    that is used to contain resource sync state, account ownership,
+                                    constructed ARN for the resource
+                                  properties:
+                                    arn:
+                                      description: |-
+                                        ARN is the Amazon Resource Name for the resource. This is a
+                                        globally-unique identifier and is set only by the ACK service controller
+                                        once the controller has orchestrated the creation of the resource OR
+                                        when it has verified that an "adopted" resource (a resource where the
+                                        ARN annotation was set by the Kubernetes user on the CR) exists and
+                                        matches the supplied CR's Spec field values.
+                                      type: string
+                                    ownerAccountID:
+                                      description: |-
+                                        OwnerAccountID is the AWS Account ID of the account that owns the
+                                        backend AWS service API resource.
+                                      type: string
+                                    region:
+                                      description: Region is the AWS region in which the resource
+                                        exists or will exist.
+                                      type: string
+                                  required:
+                                    - ownerAccountID
+                                    - region
+                                  type: object
                                 createDate:
                                   description: |-
                                     The date and time, in ISO 8601 date-time format (http://www.iso.org/iso/iso8601),
@@ -325,31 +365,15 @@ global:
                                     IDs, see IAM identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html)
                                     in the IAM User Guide.
                                   type: string
-                                roleLastUsed:
-                                  description: |-
-                                    Contains information about the last time that an IAM role was used. This
-                                    includes the date and time and the Region in which the role was last used.
-                                    Activity is only reported for the trailing 400 days. This period can be shorter
-                                    if your Region began supporting these features within the last year. The
-                                    role might have been used more than 400 days ago. For more information, see
-                                    Regions where data is tracked (https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#access-advisor_tracking-period)
-                                    in the IAM user Guide.
-                                  properties:
-                                    lastUsedDate:
-                                      format: date-time
-                                      type: string
-                                    region:
-                                      type: string
-                                  type: object
                               type: object
                           type: object
-                        type: object
+                        type: array
                     type: object
                 type: object
             served: true
             storage: true
             subresources:
-              status: { }
+              status: {}
 
 serviceAccount:
   create: true
@@ -358,7 +382,7 @@ replicaCount: 1
 
 image:
   repository: public.ecr.aws/edenlabllc/core.aws-iam-provisioner.operators.infra
-  tag: v0.2.1
+  tag: v0.3.0
 
 podAnnotations:
   linkerd.io/inject: {{ "disabled" | default .Values.configs.linkerd.inject }}
@@ -381,25 +405,6 @@ clusterRole:
         - get
         - list
         - watch
-    - apiGroups:
-        - iam.services.k8s.aws
-      resources:
-        - policies
-      verbs:
-        - get
-        - list
-        - watch
-    - apiGroups:
-        - iam.services.k8s.aws
-      resources:
-        - roles
-      verbs:
-        - get
-        - create
-        - list
-        - watch
-        - delete
-        - update
     - apiGroups:
         - iam.aws.edenlab.io
       resources:
@@ -429,9 +434,19 @@ clusterRole:
 
 command:
   - "/manager"
-#env:
+env:
+  AWS_SHARED_CREDENTIALS_FILE: /var/run/secrets/aws/credentials
+  AWS_PROFILE: default
 #  Multiple namespaces can be listed separated by commas
 #  WATCH_NAMESPACES: ""
+volumeMounts:
+  - name: aws-iam-controller-secret
+    mountPath: /var/run/secrets/aws
+    readOnly: true
+volumesExistingSecret:
+  enable: true
+  volumes:
+    - name: aws-iam-controller-secret
 livenessProbe:
   httpGet:
     path: /healthz
