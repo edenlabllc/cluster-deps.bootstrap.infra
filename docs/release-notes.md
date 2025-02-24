@@ -3,10 +3,10 @@
 ## Release v0.3.0
 
 ## What's new
-- Bumped `tenant-artifact` GitHub Action to `v2` for tenant release with the new RMK version.
-- Updated configuration for the `aws-iam-provision` release to support the new version of the `aws-iam-provision-operator`.
-- Upgraded aws-iam-provision-operator to version `v0.3.0`.
-- Removed releases: `aws-iam-config`, `aws-iam-controller` due to redundancy.
+- Bumped `tenant-artifact` GitHub Action to `v2` for tenant repositories which use the new `v0.45.0` RMK version.
+- Upgraded `aws-iam-provision-operator` to `v0.3.0` to support IAM role and policy management.
+- Removed the `aws-iam-config`, `aws-iam-controller` releases for redundancy.
+- Updated configuration for the `aws-iam-provision` release to support the new version of `aws-iam-provision-operator`.
 
 ## Bug fixes
 
