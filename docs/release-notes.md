@@ -4,9 +4,10 @@
 
 ## What's new
 - Bumped `tenant-artifact` GitHub Action to `v2` for tenant repositories which use the new `v0.45.0` RMK version.
+- Bumped `kubectl` version to `v1.30.10` for proper support of Kubernetes `v1.30.X`.
 - Upgraded `aws-iam-provision-operator` to `v0.3.0` to support IAM role and policy management.
 - Removed the `aws-iam-config`, `aws-iam-controller` releases for redundancy.
-- Updated configuration for the `aws-iam-provision` release to support the new version of `aws-iam-provision-operator`.
+- Updated configuration for the `aws-iam-provision` release to support the new version of `aws-iam-provision-operator`
 
 ## Bug fixes
 
@@ -18,6 +19,9 @@ inventory:
   hooks:
     helmfile.hooks.infra:
       version: v1.29.2
+  tools:
+    kubectl:
+      version: 1.30.10
 ```
 
 ### List of updated releases

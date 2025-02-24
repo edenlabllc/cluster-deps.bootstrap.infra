@@ -36,7 +36,7 @@ inventory:
       os-mac: darwin
       rename: true
     kubectl:
-      version: 1.28.13
+      version: 1.30.10
       url: https://dl.k8s.io/release/v{{.Version}}/bin/{{.Os}}/amd64/{{.Name}}
       checksum: https://dl.k8s.io/release/v{{.Version}}/bin/{{.Os}}/amd64/{{.Name}}.sha256
       os-linux: linux
