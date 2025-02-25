@@ -65,7 +65,7 @@ inventory:
       os-linux: linux
       os-mac: darwin
     k3d:
-      version: 5.7.3
+      version: 5.8.3
       url: https://github.com/k3d-io/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}-{{.Os}}-amd64
       os-linux: linux
       os-mac: darwin
