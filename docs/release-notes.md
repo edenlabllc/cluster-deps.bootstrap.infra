@@ -8,7 +8,7 @@
 - Upgraded `aws-iam-provision-operator` to `v0.3.0` to support IAM role and policy management.
 - Removed the `aws-iam-config`, `aws-iam-controller` releases for redundancy.
 - Updated configuration for the `aws-iam-provision` release to support the new version of `aws-iam-provision-operator`.
-- Updated Control Plane version for all cluster providers.
+- Updated control plane version for all cluster providers.
 
 ## Bug fixes
 
