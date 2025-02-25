@@ -22,7 +22,7 @@ controlPlane:
     sshPublicKey: {{ readFile (printf "%s/.ssh/id_rsa.pub" (env "HOME")) | b64enc }}
 
     ## Kubernetes version
-    version: v1.29.8
+    version: v1.30.9
 
     ## Network policy, "calico" (for kubenet and azurecni) or "azure" (for azureCNI)
     networkPolicy: azure

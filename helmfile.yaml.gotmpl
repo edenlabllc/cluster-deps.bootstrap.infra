@@ -100,7 +100,7 @@ releases:
   - name: capi-cluster
     namespace: kube-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/k3d-cluster"
-    version: 0.1.0
+    version: 0.2.0
     labels:
       cluster: capi
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
@@ -120,7 +120,7 @@ releases:
   - name: k3d-cluster
     namespace: kube-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/k3d-cluster"
-    version: 0.1.0
+    version: 0.2.0
     labels:
       cluster: k3d
 {{/* TODO: Will be restored to {{ eq (env "K3D_CLUSTER" | default "false") "true" }} state after transition to support Cluster API */}}
