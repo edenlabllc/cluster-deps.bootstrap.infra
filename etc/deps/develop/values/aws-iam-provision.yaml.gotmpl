@@ -193,7 +193,7 @@ policies:
             ],
             "Version": "2012-10-17"
         }
-  {{ env "NAME" }}-ebs-snapshot-provision-core:
+  {{ env "NAME" }}-ebs-snapshot-provision-operator-core:
     spec:
       policyDocument: |
         {
@@ -259,4 +259,4 @@ roles:
           ]
         }
       policies:
-        - {{ env "NAME" }}-ebs-snapshot-provision-core
+        - {{ env "NAME" }}-ebs-snapshot-provision-operator-core
