@@ -193,6 +193,24 @@ policies:
             ],
             "Version": "2012-10-17"
         }
+  {{ env "NAME" }}-ebs-snapshot-provision-core:
+    spec:
+      policyDocument: |
+        {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "ec2:DescribeAvailabilityZones",
+                        "ec2:DescribeInstances",
+                        "ec2:DescribeSnapshots",
+                        "ec2:DescribeTags"
+                    ],
+                    "Resource": "*"
+                }
+            ]
+        }
 
 roles:
   {{ env "NAME" }}-ebs-csi-controller:
@@ -219,3 +237,26 @@ roles:
       policies:
         - {{ env "NAME" }}-ebs-csi-controller-core
         - {{ env "NAME" }}-ebs-csi-controller-kms
+  {{ env "NAME" }}-ebs-snapshot-provision-operator:
+    spec:
+      assumeRolePolicyDocument: |
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "{{`{{ .OIDCProviderARN }}`}}"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "{{`{{ .OIDCProviderName }}`}}:sub": "system:serviceaccount:kube-system:ebs-snapshot-provision-operator"
+                }
+              }
+            }
+          ]
+        }
+      policies:
+        - {{ env "NAME" }}-ebs-snapshot-provision-core
