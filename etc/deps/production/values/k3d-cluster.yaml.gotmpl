@@ -73,10 +73,8 @@ files:
         valuesContent: |-
           ports:
             traefik:
-              port: 9000
-              expose: true
-              exposedPort: 9000
-              protocol: TCP
+              expose:
+                default: true
 
 #hostAliases: # /etc/hosts style entries to be injected into /etc/hosts in the node containers and in the NodeHosts section in CoreDNS
 #  <host-name>:

@@ -1,5 +1,53 @@
 # Deps Release Notes
 
+## Release v0.3.0
+
+## What's new
+- Added role and policy for `ebs-snapshot-provision-operator`.
+- Bumped `tenant-artifact` GitHub Action to `v2` for tenant repositories which use the new `v0.45.0` RMK version.
+- Bumped `kubectl` version to `v1.30.10` for proper support of Kubernetes `v1.30.X`.
+- Removed the `aws-iam-config`, `aws-iam-controller` releases for redundancy.
+- Updated configuration for the `aws-iam-provision` release to support the new version of `aws-iam-provision-operator`.
+- Updated control plane version for all cluster providers.
+- Upgraded `aws-iam-provision-operator` to `v0.3.0` to support IAM role and policy management.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+```yaml
+inventory:
+  hooks:
+    helmfile.hooks.infra:
+      version: v1.29.2
+  tools:
+    kubectl:
+      version: 1.30.10
+    k3d:
+      version: 5.8.3
+```
+
+### List of updated releases
+```yaml
+  - name: aws-iam-provision
+    chart: core-charts/aws-iam-provision
+    version: 0.2.0
+  - name: aws-iam-provision-operator
+    chart: core-charts/app
+    version: 2.1.0
+  - name: capi-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.2.0
+  - name: k3d-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.2.0
+```
+
+### List of added releases
+
+---
+
 ## Release v0.2.0
 
 ## What's new

@@ -26,7 +26,7 @@ inventory:
       url: https://github.com/jkroepke/helm-secrets
   hooks:
     helmfile.hooks.infra:
-      version: v1.29.1
+      version: v1.29.2
       url: git::https://github.com/edenlabllc/{{.Name}}.git?ref={{.Version}}
   tools:
     clusterctl:
@@ -36,7 +36,7 @@ inventory:
       os-mac: darwin
       rename: true
     kubectl:
-      version: 1.28.13
+      version: 1.30.10
       url: https://dl.k8s.io/release/v{{.Version}}/bin/{{.Os}}/amd64/{{.Name}}
       checksum: https://dl.k8s.io/release/v{{.Version}}/bin/{{.Os}}/amd64/{{.Name}}.sha256
       os-linux: linux
@@ -65,7 +65,7 @@ inventory:
       os-linux: linux
       os-mac: darwin
     k3d:
-      version: 5.7.3
+      version: 5.8.3
       url: https://github.com/k3d-io/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}-{{.Os}}-amd64
       os-linux: linux
       os-mac: darwin
