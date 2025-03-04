@@ -3,6 +3,7 @@
 ## Release v0.3.1
 
 ## What's new
+- Bumped `helmfile.hooks.infra` version to `v1.30.0`.
 
 ## Bug fixes
 
