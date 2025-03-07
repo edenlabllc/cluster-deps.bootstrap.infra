@@ -1,4 +1,26 @@
-# Deps Release Notes
+# Cluster Deps Release Notes
+
+## Release v0.3.2
+
+## What's new
+
+## Bug fixes
+- Bump the `aws-iam-provision` release's chart version to `0.2.1` to handle null items correctly in the template ranges.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+```yaml
+  - name: aws-iam-provision
+    chart: core-charts/aws-iam-provision
+    version: 0.2.1
+```
+
+### List of added releases
+
+---
 
 ## Release v0.3.1
 
