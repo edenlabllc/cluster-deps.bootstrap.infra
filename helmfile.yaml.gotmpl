@@ -160,7 +160,7 @@ releases:
   - name: aws-iam-provision
     namespace: capa-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/aws-iam-provision"
-    version: 0.2.0
+    version: 0.2.1
     labels:
       cluster: aws
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
