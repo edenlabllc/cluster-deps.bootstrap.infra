@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
           path: .github/actions/tenant-artifact
 
-      - name: Create staging tenant Artifact
+      - name: Create tenant Artifact
         uses: ./.github/actions/tenant-artifact
         with:
           autotag: true
