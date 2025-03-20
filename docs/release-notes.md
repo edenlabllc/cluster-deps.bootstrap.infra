@@ -4,6 +4,7 @@
 
 ## What's new
 - Bumped `helmfile.hooks.infra` version to `v1.30.1`.
+- Project update has been enabled for tenant `deps.bootstrap.infra`.
 
 ## Bug fixes
 
