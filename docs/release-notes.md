@@ -4,6 +4,7 @@
 
 ## What's new
 - Bumped `helmfile.hooks.infra` version to `v1.30.1`.
+- Added auto update `deps.bootatrap.infra` tenant to `tenant-artifact` GitHub Action.
 
 ## Bug fixes
 

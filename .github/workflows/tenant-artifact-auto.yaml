@@ -25,11 +25,24 @@ jobs:
           token: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
           path: .github/actions/tenant-artifact
 
-      - name: Create and upload tenant Artifact
+      - name: Create staging tenant Artifact
         uses: ./.github/actions/tenant-artifact
+        if: ${{ github.ref == 'refs/heads/staging' }}
         with:
           autotag: true
           github_token_repo_full_access: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
           slack_notifications: true
           slack_webhook: ${{ secrets.SLACK_WEBHOOK_RELEASES }}
           slack_message_release_notes_path: docs/release-notes.md
+
+      - name: Create production tenant Artifact
+        uses: ./.github/actions/tenant-artifact
+        if: ${{ github.ref == 'refs/heads/production' }}
+        with:
+          autotag: true
+          github_token_repo_full_access: ${{ secrets.GH_TOKEN_REPO_FULL_ACCESS }}
+          slack_notifications: true
+          slack_webhook: ${{ secrets.SLACK_WEBHOOK_RELEASES }}
+          slack_message_release_notes_path: docs/release-notes.md
+          update_tenant_environments: |
+            deps=develop
