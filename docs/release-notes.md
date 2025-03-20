@@ -1,5 +1,28 @@
 # Cluster Deps Release Notes
 
+## Release v0.3.3
+
+## What's new
+- Bumped `helmfile.hooks.infra` version to `v1.30.1`.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+```yaml
+inventory:
+  hooks:
+    helmfile.hooks.infra:
+      version: v1.30.1
+```
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.3.2
 
 ## What's new
