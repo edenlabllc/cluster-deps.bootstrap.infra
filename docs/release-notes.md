@@ -1,5 +1,24 @@
 # Cluster Deps Release Notes
 
+## Release v0.4.0
+
+## What's new
+- Added support for installing config extensions in `CAPI` management clusters.
+- Separated releases for different cloud providers using custom namespaces.
+- Introduced `Helmfile` hooks to clean up namespaces during provider release deletion.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.3.3
 
 ## What's new
