@@ -123,8 +123,7 @@ releases:
     version: 0.2.0
     labels:
       cluster: k3d
-{{/* TODO: Will be restored to {{ eq (env "K3D_CLUSTER" | default "false") "true" }} state after transition to support Cluster API */}}
-    installed: {{ and (eq (.Values | get (print "k3d-cluster" ".enabled") false) true) (eq (env "K3D_CLUSTER" | default "false") "true") }}
+    installed: {{ eq (env "K3D_CLUSTER" | default "false") "true" }}
     inherit:
       - template: release
 
@@ -134,19 +133,18 @@ releases:
     version: "{{`{{ .Release.Labels.appChartVersion }}`}}"
     labels:
       cluster: aws
+      config: extension
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
     inherit:
       - template: release
 
   - name: aws-cluster
-    namespace: capa-system
+    namespace: capa-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/aws-cluster"
     version: 0.2.1
     labels:
       cluster: aws
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
-    needs:
-      - aws-iam-provision-operator
     inherit:
       - template: release
     {{- with .Values | get (print "hooks." "aws-cluster") "" }}
@@ -158,7 +156,7 @@ releases:
     {{- end }}
 
   - name: aws-iam-provision
-    namespace: capa-system
+    namespace: capa-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/aws-iam-provision"
     version: 0.2.1
     labels:
@@ -166,7 +164,6 @@ releases:
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
     needs:
       - aws-cluster
-      - aws-iam-provision-operator
     inherit:
       - template: release
     {{- with .Values | get (print "hooks." "aws-iam-provision") "" }}
@@ -178,7 +175,7 @@ releases:
     {{- end }}
 
   - name: azure-cluster
-    namespace: capz-system
+    namespace: capz-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/azure-cluster"
     version: 0.2.3
     labels:
@@ -195,7 +192,7 @@ releases:
     {{- end }}
 
   - name: gcp-cluster
-    namespace: capg-system
+    namespace: capg-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/gcp-cluster"
     version: 0.2.1
     labels:
