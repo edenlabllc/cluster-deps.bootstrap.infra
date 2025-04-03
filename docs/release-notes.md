@@ -6,6 +6,7 @@
 - Added support for installing config extensions in `CAPI` management clusters.
 - Separated releases for different cloud providers using custom namespaces.
 - Introduced `Helmfile` hooks to clean up namespaces during provider release deletion.
+- Updated `GCP GKE` control plane version to `v1.30.10`.
 
 ## Bug fixes
 
