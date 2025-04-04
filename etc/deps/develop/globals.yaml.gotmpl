@@ -100,7 +100,7 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-presync-hook.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - capg-system
         - public.ecr.aws/edenlabllc/core.cluster-api-gcp-controller
         - v1.8.1
     gcp-cluster-postsync-hook:
