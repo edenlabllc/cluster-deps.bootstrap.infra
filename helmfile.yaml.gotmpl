@@ -123,7 +123,7 @@ releases:
     version: 0.2.0
     labels:
       cluster: k3d
-    installed: {{ eq (env "K3D_CLUSTER" | default "false") "true" }}
+    installed: {{ and (eq (env "K3D_CLUSTER" | default "false") "true") (eq (env "RMK_COMMAND_CATEGORY") "k3d") }}
     inherit:
       - template: release
 
