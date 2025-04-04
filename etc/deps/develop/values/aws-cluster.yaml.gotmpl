@@ -59,6 +59,11 @@ controlPlane:
     sshKeyName: {{ env "NAME" }}
     version: v1.30.9 # ^v?(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.?(\.0|[1-9][0-9]*)?$
 
+## The cluster identity configurations
+identity:
+  # ClusterIdentityName, name of "AWSClusterStaticIdentity" custom resource, required
+  clusterIdentityName: {{ env "NAME" }}-identity
+
 ## The machine pools configurations
 machinePools:
   app:

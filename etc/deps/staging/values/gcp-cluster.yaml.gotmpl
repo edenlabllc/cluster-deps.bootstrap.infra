@@ -15,6 +15,13 @@ cluster:
   region: {{ $gcpRegion }}
   managed:
     spec:
+      credentialsRef:
+        # Name of the referent.
+        # More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+        name: {{ env "NAME" }}-identity-secret
+        # Namespace of the referent.
+        # More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+        namespace: {{ .Release.Namespace }}
       # NetworkSpec encapsulates all things related to the GCP network.
       network:
         # Name is the name of the network to be used.
