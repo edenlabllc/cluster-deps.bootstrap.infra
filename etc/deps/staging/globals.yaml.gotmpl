@@ -41,14 +41,12 @@ hooks:
         - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
         - "true"
-  aws-iam-config:
-    aws-iam-config-postsync-hook:
+    aws-common-postuninstall-hook:
       events:
-        - postsync
+        - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/aws-iam-config-postsync-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
   aws-iam-provision:
     aws-iam-provision-postsync-hook:
@@ -85,6 +83,13 @@ hooks:
         - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
         - "true"
+    azure-common-postuninstall-hook:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
+      args:
+        - "{{`{{ .Release.Namespace }}`}}"
   gcp-cluster:
     # TODO: The hook is needed for resolving the issue with empty kubernetesTaints values for GKE machines pools.
     #       This temporary solution may be deprecated in the subsequent releases.
@@ -95,7 +100,7 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-presync-hook.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - capg-system
         - public.ecr.aws/edenlabllc/core.cluster-api-gcp-controller
         - v1.8.1
     gcp-cluster-postsync-hook:
@@ -123,3 +128,10 @@ hooks:
         - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
         - "true"
+    gcp-common-postuninstall-hook:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
+      args:
+        - "{{`{{ .Release.Namespace }}`}}"

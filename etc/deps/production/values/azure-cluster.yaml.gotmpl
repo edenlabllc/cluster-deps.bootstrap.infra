@@ -1,10 +1,10 @@
 ## AKS cluster configuration
 cluster:
   ## The resource group for the AKS cluster object
-  resourceGroupName: {{ env "TENANT" }}
+  resourceGroupName: {{ env "NAME" }}
 
   ## The resource group name for the nodes
-  nodeResourceGroupName: "{{ env "TENANT" }}-machine-pools"
+  nodeResourceGroupName: "{{ env "NAME" }}-machine-pools"
 
   ## The location of the cluster
   location: {{ env "AZURE_LOCATION" }}
@@ -37,7 +37,7 @@ controlPlane:
 ## The cluster identity configurations
 identity:
   # ClusterIdentityName, name of "AzureClusterIdentity" custom resource, required
-  clusterIdentityName: azure-cluster-identity
+  clusterIdentityName: {{ env "NAME" }}-identity
 
 machinePools:
   system:
