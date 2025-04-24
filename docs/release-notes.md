@@ -3,7 +3,7 @@
 ## Release v0.5.0
 
 ## What's new
-- Bumped `helmfile.hooks.infra` version to `v1.31.0`.
+- Bumped `helmfile.hooks.infra` version to `v1.31.1`.
 
 ## Bug fixes
 
@@ -14,7 +14,7 @@
 inventory:
   hooks:
     helmfile.hooks.infra:
-      version: v1.31.0
+      version: v1.31.1
 ```
 
 ### List of updated releases
