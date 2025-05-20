@@ -194,7 +194,7 @@ releases:
   - name: gcp-cluster
     namespace: capg-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/gcp-cluster"
-    version: 0.2.2
+    version: 0.2.1
     labels:
       cluster: gcp
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}

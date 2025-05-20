@@ -4,8 +4,6 @@
 
 ## What's new
 
-- Bumped the `gcp-cluster` release's chart version to `0.2.2` to disable `loggingService` and `monitoringService` by
-  default.
 - Changed the `clusterctl-config`'s `gcp` provider to use the new `edenlabllc/cluster-api-provider-gcp` OSS GitHub fork
   of version `v1.8.2`.
 
