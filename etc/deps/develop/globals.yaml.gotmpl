@@ -90,6 +90,7 @@ hooks:
       command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
+  gcp-cluster:
     gcp-cluster-postsync-hook:
       events:
         - postsync

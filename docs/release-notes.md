@@ -101,7 +101,8 @@ inventory:
 
 ## Bug fixes
 
-- Bumped the `aws-iam-provision` release's chart version to `0.2.1` to handle null items correctly in the template ranges.
+- Bumped the `aws-iam-provision` release's chart version to `0.2.1` to handle null items correctly in the template
+  ranges.
 
 ## Additional information
 
