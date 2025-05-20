@@ -11,8 +11,6 @@
 
 ## Bug fixes
 
-- Fixed the first release name argument of all the `*-cluster-postsync-hook` hooks in the `globals.yaml.gotmpl` file.
-
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
