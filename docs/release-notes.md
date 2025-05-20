@@ -11,6 +11,8 @@
 
 ## Bug fixes
 
+- Fixed the first release name argument of all the `*-cluster-postsync-hook` hooks in the `globals.yaml.gotmpl` file.
+
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
@@ -101,7 +103,8 @@ inventory:
 
 ## Bug fixes
 
-- Bumped the `aws-iam-provision` release's chart version to `0.2.1` to handle null items correctly in the template ranges.
+- Bumped the `aws-iam-provision` release's chart version to `0.2.1` to handle null items correctly in the template
+  ranges.
 
 ## Additional information
 

@@ -22,7 +22,7 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/aws-cluster-postsync-hook.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
+        - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
     aws-cluster-preuninstall-hook:
       events:
@@ -64,7 +64,7 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/azure-cluster-postsync-hook.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
+        - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
     azure-cluster-preuninstall-hook:
       events:
@@ -97,7 +97,7 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-postsync-hook.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
+        - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
     gcp-cluster-preuninstall-hook:
       events:
