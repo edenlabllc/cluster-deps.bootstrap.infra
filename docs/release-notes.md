@@ -1,8 +1,28 @@
 # Cluster Deps Release Notes
 
+## Release v0.6.0
+
+## What's new
+
+- Changed the `clusterctl-config`'s `gcp` provider to use the new `edenlabllc/cluster-api-provider-gcp` OSS GitHub fork
+  of version `v1.8.2`.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.5.0
 
 ## What's new
+
 - Bumped `helmfile.hooks.infra` version to `v1.31.1`.
 
 ## Bug fixes
@@ -10,6 +30,7 @@
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
+
 ```yaml
 inventory:
   hooks:
@@ -26,6 +47,7 @@ inventory:
 ## Release v0.4.0
 
 ## What's new
+
 - Added support for installing config extensions in `CAPI` management clusters.
 - Added custom identity name support for multiple cloud providers.
 - Added conditional `k3d-cluster` installation based on `RMK_COMMAND_CATEGORY` and `K3D_CLUSTER` environment variables.
@@ -48,6 +70,7 @@ inventory:
 ## Release v0.3.3
 
 ## What's new
+
 - Bumped `helmfile.hooks.infra` version to `v1.30.1`.
 - Project update has been enabled for tenant `deps.bootstrap.infra`.
 
@@ -56,6 +79,7 @@ inventory:
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
+
 ```yaml
 inventory:
   hooks:
@@ -74,13 +98,16 @@ inventory:
 ## What's new
 
 ## Bug fixes
-- Bump the `aws-iam-provision` release's chart version to `0.2.1` to handle null items correctly in the template ranges.
+
+- Bumped the `aws-iam-provision` release's chart version to `0.2.1` to handle null items correctly in the template
+  ranges.
 
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
 
 ### List of updated releases
+
 ```yaml
   - name: aws-iam-provision
     chart: core-charts/aws-iam-provision
@@ -94,6 +121,7 @@ inventory:
 ## Release v0.3.1
 
 ## What's new
+
 - Bumped `helmfile.hooks.infra` version to `v1.30.0`.
 
 ## Bug fixes
@@ -101,6 +129,7 @@ inventory:
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
+
 ```yaml
 inventory:
   hooks:
@@ -117,6 +146,7 @@ inventory:
 ## Release v0.3.0
 
 ## What's new
+
 - Added role and policy for `ebs-snapshot-provision-operator`.
 - Bumped `tenant-artifact` GitHub Action to `v2` for tenant repositories which use the new `v0.45.0` RMK version.
 - Bumped `kubectl` version to `v1.30.10` for proper support of Kubernetes `v1.30.X`.
@@ -130,6 +160,7 @@ inventory:
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
+
 ```yaml
 inventory:
   hooks:
@@ -143,6 +174,7 @@ inventory:
 ```
 
 ### List of updated releases
+
 ```yaml
   - name: aws-iam-provision
     chart: core-charts/aws-iam-provision
@@ -165,6 +197,7 @@ inventory:
 ## Release v0.2.0
 
 ## What's new
+
 - Added example K3D cluster configuration values.
 - Updated `GCP GKE` control plane version to `v1.30.8`.
 - Changed the sequence of launching releases for `aws-iam-config`.
@@ -177,6 +210,7 @@ inventory:
 ### Mandatory updates for `project.yaml`
 
 ### List of updated releases
+
 ```yaml
   - name: aws-iam-config
     chart: core-charts/aws-iam-config
@@ -193,6 +227,7 @@ inventory:
 ## Release v0.1.0
 
 ## What's new
+
 - Prepared repository for OSS.
 - Added project structure files.
 
@@ -205,6 +240,7 @@ inventory:
 ### List of updated releases
 
 ### List of added releases
+
 ```yaml
   - name: capi-cluster
     chart: core-charts/k3d-cluster
