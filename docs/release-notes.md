@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v0.7.0
+
+## What's new
+
+- Refactored the `tenant-artifact` action according to the new version.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.6.0
 
 ## What's new
