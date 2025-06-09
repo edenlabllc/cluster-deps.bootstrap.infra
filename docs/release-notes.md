@@ -1,5 +1,24 @@
 # Cluster Deps Release Notes
 
+## Release v0.8.0
+
+## What's new
+
+- Changed the `clusterctl-config`'s `aws` provider to use the new `edenlabllc/cluster-api-provider-aws` OSS GitHub fork
+  of version `v2.8.3`.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.7.0
 
 ## What's new
