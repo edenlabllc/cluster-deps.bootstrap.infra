@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v0.11.0
+
+## What's new
+
+- Added `onprem` `InfrastructureProvider` of version `v0.1.1` to `clusterctl-config.yaml.gotmpl`.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.10.0
 
 ## What's new
