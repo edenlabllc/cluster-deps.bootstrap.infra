@@ -211,7 +211,7 @@ releases:
   - name: onprem-cluster
     namespace: capop-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/onprem-cluster"
-    version: 0.1.2
+    version: 0.1.3
     labels:
       cluster: onprem
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
