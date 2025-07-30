@@ -207,3 +207,20 @@ releases:
         {{- toYaml $hook | nindent 8 }}
       {{- end }}
     {{- end }}
+
+  - name: onprem-cluster
+    namespace: capop-{{ env "NAME" }}
+    chart: "{{`{{ .Release.Labels.repo }}`}}/onprem-cluster"
+    version: 0.1.1
+    labels:
+      cluster: onprem
+    installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
+    inherit:
+      - template: release
+    {{- with .Values | get (print "hooks." "onprem-cluster") "" }}
+    hooks:
+      {{- range $name, $hook := . }}
+      - name: {{ $name }}
+        {{- toYaml $hook | nindent 8 }}
+      {{- end }}
+    {{- end }}

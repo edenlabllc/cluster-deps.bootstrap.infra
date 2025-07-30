@@ -5,6 +5,8 @@
 ## What's new
 
 - Added `onprem` `InfrastructureProvider` of version `v0.1.1` to `clusterctl-config.yaml.gotmpl`.
+- Added `onprem-cluster` release of version `0.1.1` to `helmfile.yaml.gotmpl`.
+- Bumped `helmfile.hooks.infra` version to `v1.34.0`.
 
 ## Bug fixes
 
@@ -12,9 +14,22 @@
 
 ### Mandatory updates for `project.yaml`
 
+```yaml
+inventory:
+  hooks:
+    helmfile.hooks.infra:
+      version: v1.34.0
+```
+
 ### List of updated releases
 
 ### List of added releases
+
+```yaml
+  - name: onprem-cluster
+    chart: core-charts/onprem-cluster
+    version: 0.1.1
+```
 
 ---
 

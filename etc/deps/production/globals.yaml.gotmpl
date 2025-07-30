@@ -123,3 +123,36 @@ hooks:
       command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
+  onprem-cluster:
+    onprem-cluster-postsync-hook:
+      events:
+        - postsync
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/onprem-cluster-postsync-hook.sh"
+      args:
+        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    onprem-cluster-preuninstall-hook:
+      events:
+        - preuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/onprem-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+    onprem-cluster-postuninstall-hook:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/onprem-cluster-uninstall-hook.sh"
+      args:
+        - '{{`{{ env "NAME" }}`}}'
+        - "{{`{{ .Release.Namespace }}`}}"
+        - "true"
+    onprem-common-postuninstall-hook:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
+      args:
+        - "{{`{{ .Release.Namespace }}`}}"
