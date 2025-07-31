@@ -1,0 +1,165 @@
+templates:
+  machineSpec: &machineSpec
+    bootstrap:
+      # DataSecretName is the name of the secret that stores the bootstrap data script.
+      # If nil, the Machine should remain in the Pending state.
+      dataSecretName: ""
+
+  machineRemoteServerSpec: &machineRemoteServerSpec
+    k3sAirGapEnabled: false
+    k3sRole: server
+    sshUser: root
+
+  machineRemoteAgentSpec: &machineRemoteAgentSpec
+    k3sAirGapEnabled: false
+    k3sRole: agent
+    sshUser: root
+    
+  controlPlaneHostExternal: &controlPlaneHostExternal "" # e.g. 203.0.113.42
+  controlPlaneHostInternal: &controlPlaneHostInternal "" # e.g. 192.0.2.10
+
+## On-premise cluster configuration
+cluster:
+  ## The name of the cluster
+  name: {{ env "NAME" }}
+
+  ## the cluster network
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+        - 10.42.0.0/16
+    services:
+      cidrBlocks:
+        - 10.43.0.0/16
+
+controlPlane:
+  endpoint:
+    host: *controlPlaneHostExternal
+    port: 6443
+
+  spec:
+    k3sHAMode: true
+    ## Kubernetes version
+    version: v1.31.9+k3s1
+
+  ## The control plane machines (k3sRole=server)
+  machines:
+    k3s-control-plane-0:
+      enabled: false
+      annotations: {}
+      labels: {}
+
+      remote:
+        spec:
+          address: "" # e.g. 203.0.113.43
+          k3sInitServer: true
+          k3sServerConfigYAML: |
+            node-taint:
+              - node-role.kubernetes.io/control-plane=:NoSchedule
+            tls-san:
+              - "" # todo change to same as address
+          <<: *machineRemoteServerSpec
+
+      spec:
+        providerID: "k3s://k3s-control-plane-0.k3s.internal" # should be equal to Node.spec.providerID
+        <<: *machineSpec
+
+    k3s-control-plane-1:
+      enabled: false
+      annotations: {}
+      labels: {}
+
+      remote:
+        spec:
+          address: "" # e.g. 203.0.113.44
+          k3sApiEndpoint: *controlPlaneHostInternal
+          k3sInitServer: false
+          k3sServerConfigYAML: |
+            node-taint:
+              - node-role.kubernetes.io/control-plane=:NoSchedule
+            tls-san:
+              - "" # todo change to same as address
+          <<: *machineRemoteServerSpec
+
+      spec:
+        providerID: "k3s://k3s-control-plane-1.k3s.internal" # should be equal to Node.spec.providerID
+        <<: *machineSpec
+
+    k3s-control-plane-2:
+      enabled: false
+      annotations: {}
+      labels: {}
+
+      remote:
+        spec:
+          address: "" # e.g. 203.0.113.45
+          k3sApiEndpoint: *controlPlaneHostInternal
+          k3sInitServer: false
+          k3sServerConfigYAML: |
+            node-taint:
+              - node-role.kubernetes.io/control-plane=:NoSchedule
+            tls-san:
+              - "" # todo change to same as address
+          <<: *machineRemoteServerSpec
+
+      spec:
+        providerID: "k3s://k3s-control-plane-2.k3s.internal" # should be equal to Node.spec.providerID
+        <<: *machineSpec
+
+## The worker machines (k3sRole=agent)
+machines: #{}
+  load-balancer:
+    enabled: false
+    annotations: {}
+    labels: {}
+
+    remote:
+      spec:
+        address: "" # e.g. 203.0.113.46
+        k3sAgentConfigYAML: |
+          node-label:
+            - svccontroller.k3s.cattle.io/lbpool=pool1
+            - svccontroller.k3s.cattle.io/enablelb=true
+        k3sApiEndpoint: *controlPlaneHostInternal
+        <<: *machineRemoteAgentSpec
+
+    spec:
+      providerID: "k3s://load-balancer.k3s.internal" # should be equal to Node.spec.providerID
+      <<: *machineSpec
+
+  app-stateless:
+    enabled: false
+    annotations: {}
+    labels: {}
+
+    remote:
+      spec:
+        address: "" # e.g. 203.0.113.47
+        # agent config is optional
+        # k3sAgentConfigYAML: |
+        k3sApiEndpoint: *controlPlaneHostInternal
+        <<: *machineRemoteAgentSpec
+
+    spec:
+      providerID: "k3s://app-stateless.k3s.internal" # should be equal to Node.spec.providerID
+      <<: *machineSpec
+
+  app-stateful:
+    enabled: false
+    annotations: {}
+    labels: {}
+
+    remote:
+      spec:
+        address: "" # e.g. 203.0.113.48
+        k3sAgentConfigYAML: |
+          node-label:
+            - db=mydb
+          node-taint:
+            - key=mydb:NoSchedule
+        k3sApiEndpoint: *controlPlaneHostInternal
+        <<: *machineRemoteAgentSpec
+
+    spec:
+      providerID: "k3s://app-stateful.k3s.internal" # should be equal to Node.spec.providerID
+      <<: *machineSpec
