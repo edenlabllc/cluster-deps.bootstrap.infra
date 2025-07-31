@@ -4,7 +4,7 @@
 
 ## What's new
 
-- Added `onprem` `InfrastructureProvider` of version `v0.1.1` to `clusterctl-config.yaml.gotmpl`.
+- Added `onprem` `InfrastructureProvider` of version `v0.1.2` to `clusterctl-config.yaml.gotmpl`.
 - Added `onprem-cluster` release of version `0.1.3` to `helmfile.yaml.gotmpl`.
 - Bumped `helmfile.hooks.infra` version to `v1.34.1`.
 
