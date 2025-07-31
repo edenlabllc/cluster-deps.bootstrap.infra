@@ -18,7 +18,7 @@
 inventory:
   hooks:
     helmfile.hooks.infra:
-      version: v1.34.0
+      version: v1.34.1
 ```
 
 ### List of updated releases
