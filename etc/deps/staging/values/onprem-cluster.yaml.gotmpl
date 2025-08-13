@@ -14,7 +14,7 @@ templates:
     k3sAirGapEnabled: false
     k3sRole: agent
     sshUser: root
-    
+
   controlPlaneHostExternal: &controlPlaneHostExternal "" # e.g. 203.0.113.42
   controlPlaneHostInternal: &controlPlaneHostInternal "" # e.g. 192.0.2.10
 
@@ -61,7 +61,7 @@ controlPlane:
           <<: *machineRemoteServerSpec
 
       spec:
-        providerID: "k3s://k3s-control-plane-0.k3s.internal" # should be equal to Node.spec.providerID
+        # providerID will automatically be set by edenlabllc/on-premise-configurator.operators.infra
         <<: *machineSpec
 
     k3s-control-plane-1:
@@ -82,7 +82,7 @@ controlPlane:
           <<: *machineRemoteServerSpec
 
       spec:
-        providerID: "k3s://k3s-control-plane-1.k3s.internal" # should be equal to Node.spec.providerID
+        # providerID will automatically be set by edenlabllc/on-premise-configurator.operators.infra
         <<: *machineSpec
 
     k3s-control-plane-2:
@@ -103,7 +103,7 @@ controlPlane:
           <<: *machineRemoteServerSpec
 
       spec:
-        providerID: "k3s://k3s-control-plane-2.k3s.internal" # should be equal to Node.spec.providerID
+        # providerID will automatically be set by edenlabllc/on-premise-configurator.operators.infra
         <<: *machineSpec
 
 ## The worker machines (k3sRole=agent)
@@ -124,7 +124,7 @@ machines: #{}
         <<: *machineRemoteAgentSpec
 
     spec:
-      providerID: "k3s://load-balancer.k3s.internal" # should be equal to Node.spec.providerID
+      # providerID will automatically be set by edenlabllc/on-premise-configurator.operators.infra
       <<: *machineSpec
 
   app-stateless:
@@ -141,7 +141,7 @@ machines: #{}
         <<: *machineRemoteAgentSpec
 
     spec:
-      providerID: "k3s://app-stateless.k3s.internal" # should be equal to Node.spec.providerID
+      # providerID will automatically be set by edenlabllc/on-premise-configurator.operators.infra
       <<: *machineSpec
 
   app-stateful:
@@ -161,5 +161,5 @@ machines: #{}
         <<: *machineRemoteAgentSpec
 
     spec:
-      providerID: "k3s://app-stateful.k3s.internal" # should be equal to Node.spec.providerID
+      # providerID will automatically be set by edenlabllc/on-premise-configurator.operators.infra
       <<: *machineSpec
