@@ -1,5 +1,31 @@
 # Cluster Deps Release Notes
 
+## Release v0.11.1
+
+## What's new
+
+## Bug fixes
+
+- Removed `providerID` from `onprem-cluster.yaml.gotmpl` (will automatically be set by
+  `edenlabllc/on-premise-configurator.operators.infra`).
+- Updated `onprem-cluster` chart version to `0.1.4`.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+```yaml
+  - name: onprem-cluster
+    chart: core-charts/onprem-cluster
+    version: 0.1.4
+```
+
+### List of added releases
+
+---
+
 ## Release v0.11.0
 
 ## What's new
