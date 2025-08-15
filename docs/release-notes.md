@@ -4,7 +4,7 @@
 
 ## What's new
 
-- Bumped AWS control plane version to `v1.32.6`.
+- Bumped AWS control plane version to `v1.32.7`.
 
 ## Bug fixes
 
