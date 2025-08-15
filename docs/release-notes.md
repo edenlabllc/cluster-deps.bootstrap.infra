@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v0.11.2
+
+- Bumped AWS control plane version to `v1.32.6`.
+
+## What's new
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.11.1
 
 ## What's new
