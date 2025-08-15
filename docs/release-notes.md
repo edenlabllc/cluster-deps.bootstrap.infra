@@ -2,9 +2,9 @@
 
 ## Release v0.11.2
 
-- Bumped AWS control plane version to `v1.32.6`.
-
 ## What's new
+
+- Bumped AWS control plane version to `v1.32.6`.
 
 ## Bug fixes
 
