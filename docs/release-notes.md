@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v0.11.3
+
+## What's new
+
+## Bug fixes
+
+- Fixed missing permissions for AWS snapshot copy operation.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.11.2
 
 ## What's new
