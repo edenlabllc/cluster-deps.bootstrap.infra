@@ -5,12 +5,20 @@
 ## What's new
 
 - Bumped `onprem` `InfrastructureProvider` version to `v0.1.4`.
+- Bumped `helmfile.hooks.infra` version to `v1.35.0`.
 
 ## Bug fixes
 
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
+
+```yaml
+inventory:
+  hooks:
+    helmfile.hooks.infra:
+      version: v1.35.0
+```
 
 ### List of updated releases
 
