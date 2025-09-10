@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v0.13.0
+
+## What's new
+
+- Bumped `onprem` `InfrastructureProvider` version to `v0.1.4`.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.12.0
 
 ## What's new
