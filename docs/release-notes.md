@@ -6,7 +6,7 @@
 
 ## Bug fixes
 
-- Bumped `onprem` `InfrastructureProvider` to fixed version `v0.1.5`.
+- Bumped `onprem` `InfrastructureProvider` version to `v0.1.5`.
 
 ## Additional information
 
