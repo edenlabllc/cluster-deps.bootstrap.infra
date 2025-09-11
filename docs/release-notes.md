@@ -1,5 +1,48 @@
 # Cluster Deps Release Notes
 
+## Release v0.13.2
+
+## What's new
+
+## Bug fixes
+
+- Bumped `helmfile.hooks.infra` version to `v1.35.1`.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+```yaml
+inventory:
+  hooks:
+    helmfile.hooks.infra:
+      version: v1.35.1
+```
+
+### List of updated releases
+
+### List of added releases
+
+---
+
+## Release v0.13.1
+
+## What's new
+
+## Bug fixes
+
+- Bumped `onprem` `InfrastructureProvider` version to `v0.1.5`.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.13.0
 
 ## What's new
