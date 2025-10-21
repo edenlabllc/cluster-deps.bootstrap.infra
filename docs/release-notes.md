@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v0.16.0
+
+## What's new
+
+- Updated Amazon Linux image from `AL2` to `AL2023` for `aws-cluster` release.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.15.0
 
 ## What's new
