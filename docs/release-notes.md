@@ -4,7 +4,7 @@
 
 ## What's new
 
-- Updated Amazon Linux image from `AL2` to `AL2023` for `aws-cluster` release.
+- Updated Amazon Linux image from `AL2` to `AL2023` and changed default disk size for `aws-cluster` release.
 
 ## Bug fixes
 
