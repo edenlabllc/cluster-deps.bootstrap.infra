@@ -4,6 +4,8 @@
 
 ## What's new
 
+- Bumped `Helmfile` version to `v1.1.7`.
+- Bumped `helm-secrets plugin` version to `v4.6.11`.
 - Updated Amazon Linux image from `AL2` to `AL2023` and changed default disk size for `aws-cluster` release.
 
 ## Bug fixes
@@ -11,6 +13,16 @@
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
+
+```yaml
+inventory:
+  helm-plugins:
+    secrets:
+      version: v4.6.11
+  tools:
+    helmfile:
+      version: 1.1.7
+```
 
 ### List of updated releases
 
