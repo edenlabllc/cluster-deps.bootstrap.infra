@@ -22,7 +22,7 @@ inventory:
       version: v0.15.1
       url: https://github.com/aslafy-z/helm-git
     secrets:
-      version: v4.5.0
+      version: v4.6.11
       url: https://github.com/jkroepke/helm-secrets
   hooks:
     helmfile.hooks.infra:
@@ -48,7 +48,7 @@ inventory:
       os-linux: linux
       os-mac: darwin
     helmfile:
-      version: 0.157.0
+      version: 1.1.7
       url: https://github.com/{{.Name}}/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}_{{.Version}}_{{.Os}}_amd64.tar.gz
       checksum: https://github.com/{{.Name}}/{{.Name}}/releases/download/v{{.Version}}/{{.Name}}_{{.Version}}_checksums.txt
       os-linux: linux
