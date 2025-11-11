@@ -16,143 +16,115 @@ envs: {}
 # hooks - enumeration of environment variables divided into sets related to helmfile hooks arguments
 hooks:
   aws-cluster:
-    aws-cluster-postsync-hook:
+    postsync-wait-aws-cluster-ready:
       events:
         - postsync
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/aws-cluster-postsync-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-aws-cluster-ready.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    aws-cluster-preuninstall-hook:
+        - '{{`{{ .Release.Name }}`}}'
+    preuninstall-postuninstall-delete-aws-cluster:
       events:
         - preuninstall
+        - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/aws-cluster-uninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-aws-cluster.sh"
       args:
-        - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    aws-cluster-postuninstall-hook:
+        - '{{`{{ env "NAME" }}`}}'
+        - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
+    postuninstall-delete-namespace:
       events:
         - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/aws-cluster-uninstall-hook.sh"
-      args:
-        - '{{`{{ env "NAME" }}`}}'
-        - "{{`{{ .Release.Namespace }}`}}"
-        - "true"
-    aws-common-postuninstall-hook:
-      events:
-        - postuninstall
-      showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
   aws-iam-provision:
-    aws-iam-provision-postsync-hook:
+    postsync-wait-aws-iam-provision-ready:
       events:
         - postsync
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/aws-iam-provision-postsync-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-aws-iam-provision-ready.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Name }}`}}'
   azure-cluster:
-    azure-cluster-postsync-hook:
+    postsync-wait-azure-cluster-ready:
       events:
         - postsync
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/azure-cluster-postsync-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-azure-cluster-ready.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    azure-cluster-preuninstall-hook:
+        - '{{`{{ .Release.Name }}`}}'
+    preuninstall-postuninstall-delete-azure-cluster:
       events:
         - preuninstall
+        - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/azure-cluster-uninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-azure-cluster.sh"
       args:
-        - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    azure-cluster-postuninstall-hook:
+        - '{{`{{ env "NAME" }}`}}'
+        - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
+    postuninstall-delete-namespace:
       events:
         - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/azure-cluster-uninstall-hook.sh"
-      args:
-        - '{{`{{ env "NAME" }}`}}'
-        - "{{`{{ .Release.Namespace }}`}}"
-        - "true"
-    azure-common-postuninstall-hook:
-      events:
-        - postuninstall
-      showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
   gcp-cluster:
-    gcp-cluster-postsync-hook:
+    postsync-wait-gcp-cluster-ready:
       events:
         - postsync
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-postsync-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-gcp-cluster-ready.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    gcp-cluster-preuninstall-hook:
+        - '{{`{{ .Release.Name }}`}}'
+    preuninstall-postuninstall-delete-gcp-cluster:
       events:
         - preuninstall
+        - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-uninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-gcp-cluster.sh"
       args:
-        - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    gcp-cluster-postuninstall-hook:
+        - '{{`{{ env "NAME" }}`}}'
+        - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
+    postuninstall-delete-namespace:
       events:
         - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/gcp-cluster-uninstall-hook.sh"
-      args:
-        - '{{`{{ env "NAME" }}`}}'
-        - "{{`{{ .Release.Namespace }}`}}"
-        - "true"
-    gcp-common-postuninstall-hook:
-      events:
-        - postuninstall
-      showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
   onprem-cluster:
-    onprem-cluster-postsync-hook:
+    postsync-wait-onprem-cluster-ready:
       events:
         - postsync
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/onprem-cluster-postsync-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-onprem-cluster-ready.sh"
       args:
-        - '{{`{{ .Release.Name }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    onprem-cluster-preuninstall-hook:
+        - '{{`{{ .Release.Name }}`}}'
+    preuninstall-postuninstall-delete-onprem-cluster:
       events:
         - preuninstall
+        - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/onprem-cluster-uninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-onprem-cluster.sh"
       args:
-        - '{{`{{ env "NAME" }}`}}'
         - "{{`{{ .Release.Namespace }}`}}"
-    onprem-cluster-postuninstall-hook:
+        - '{{`{{ env "NAME" }}`}}'
+        - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
+    postuninstall-delete-namespace:
       events:
         - postuninstall
       showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/onprem-cluster-uninstall-hook.sh"
-      args:
-        - '{{`{{ env "NAME" }}`}}'
-        - "{{`{{ .Release.Namespace }}`}}"
-        - "true"
-    onprem-common-postuninstall-hook:
-      events:
-        - postuninstall
-      showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/common-postuninstall-hook.sh"
+      command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"

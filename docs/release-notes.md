@@ -1,5 +1,34 @@
 # Cluster Deps Release Notes
 
+## Release v0.17.0
+
+## What's new
+
+- Removed `inventory.hooks` dependency from `project.yaml`.
+- Added all required hooks to the `bin/hooks` directory following standard naming pattern.
+- Updated hook calls in `globals.yaml.gotmpl` for all environments.
+
+## Bug fixes
+
+## Additional information
+
+- Now all `cluster-deps` hooks are stored in the `bin/hooks` directory. \
+  This will reduce a number of cascade releases needed when there are changes to the scripts. \
+  Please refer to https://github.com/edenlabllc/helmfile.hooks.infra for the hook naming pattern.
+
+### Mandatory updates for `project.yaml`
+
+```yaml
+inventory:
+  hooks: # removed
+```
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v0.16.0
 
 ## What's new
