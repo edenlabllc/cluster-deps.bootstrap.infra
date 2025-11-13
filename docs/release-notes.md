@@ -1,6 +1,6 @@
 # Cluster Deps Release Notes
 
-## Release v0.17.0
+## Release v1.0.0
 
 ## What's new
 
