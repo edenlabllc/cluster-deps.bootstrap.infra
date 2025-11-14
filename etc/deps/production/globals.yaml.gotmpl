@@ -22,26 +22,27 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-aws-cluster-ready.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
         - '{{`{{ .Release.Name }}`}}'
-    preuninstall-postuninstall-delete-aws-cluster:
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    0-preuninstall-postuninstall-delete-aws-cluster:
       events:
         - preuninstall
-      showlogs: true
-      command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-aws-cluster.sh"
-      args:
-        - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ env "NAME" }}`}}'
-        - 'false'
-    preuninstall-postuninstall-delete-aws-cluster-wait:
-      events:
         - postuninstall
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-aws-cluster.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ env "NAME" }}`}}'
-        - 'true'
+        - '{{`{{ .Release.Namespace }}`}}'
+        - '{{`{{ .Release.Name }}`}}'
+        - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    1-postuninstall-delete-namespace:
+      events:
+        - postuninstall
+      showlogs: true
+      command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
+      args:
+        - '{{`{{ .Release.Namespace }}`}}'
   aws-iam-provision:
     postsync-wait-aws-iam-provision-ready:
       events:
@@ -49,7 +50,7 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-aws-iam-provision-ready.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
         - '{{`{{ .Release.Name }}`}}'
   azure-cluster:
     postsync-wait-azure-cluster-ready:
@@ -58,25 +59,27 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-azure-cluster-ready.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
         - '{{`{{ .Release.Name }}`}}'
-    preuninstall-postuninstall-delete-azure-cluster:
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    0-preuninstall-postuninstall-delete-azure-cluster:
       events:
         - preuninstall
         - postuninstall
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-azure-cluster.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ env "NAME" }}`}}'
+        - '{{`{{ .Release.Namespace }}`}}'
+        - '{{`{{ .Release.Name }}`}}'
         - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
-    postuninstall-delete-namespace:
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    1-postuninstall-delete-namespace:
       events:
         - postuninstall
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
   gcp-cluster:
     postsync-wait-gcp-cluster-ready:
       events:
@@ -84,25 +87,27 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-gcp-cluster-ready.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
         - '{{`{{ .Release.Name }}`}}'
-    preuninstall-postuninstall-delete-gcp-cluster:
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    0-preuninstall-postuninstall-delete-gcp-cluster:
       events:
         - preuninstall
         - postuninstall
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-gcp-cluster.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ env "NAME" }}`}}'
+        - '{{`{{ .Release.Namespace }}`}}'
+        - '{{`{{ .Release.Name }}`}}'
         - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
-    postuninstall-delete-namespace:
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    1-postuninstall-delete-namespace:
       events:
         - postuninstall
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
   onprem-cluster:
     postsync-wait-onprem-cluster-ready:
       events:
@@ -110,22 +115,24 @@ hooks:
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-onprem-cluster-ready.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
         - '{{`{{ .Release.Name }}`}}'
-    preuninstall-postuninstall-delete-onprem-cluster:
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    0-preuninstall-postuninstall-delete-onprem-cluster:
       events:
         - preuninstall
         - postuninstall
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-onprem-cluster.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ env "NAME" }}`}}'
+        - '{{`{{ .Release.Namespace }}`}}'
+        - '{{`{{ .Release.Name }}`}}'
         - '{{`{{ eq .Event.Name "postuninstall" | ternary "true" "false" }}`}}'
-    postuninstall-delete-namespace:
+    # weight prefix is needed for correct hook execution order for the same event because they are sorted alphabetically during rendering
+    1-postuninstall-delete-namespace:
       events:
         - postuninstall
       showlogs: true
       command: "{{`{{ .Release.Labels.bin }}`}}/postuninstall-delete-namespace.sh"
       args:
-        - "{{`{{ .Release.Namespace }}`}}"
+        - '{{`{{ .Release.Namespace }}`}}'
