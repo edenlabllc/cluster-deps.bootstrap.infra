@@ -2,6 +2,6 @@
 
 set -e
 
-NAMESPACE="${1}"
+readonly NAMESPACE="${1}"
 
 kubectl delete namespace "${NAMESPACE}"

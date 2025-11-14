@@ -2,11 +2,11 @@
 
 set -e
 
-NAMESPACE="${1}"
-RELEASE_NAME="${2}"
-LIMIT="${3:-1200}"
+readonly NAMESPACE="${1}"
+readonly RELEASE_NAME="${2}"
+readonly LIMIT="${3:-1200}"
 
-GO_TEMPLATE='
+readonly GO_TEMPLATE='
   {{- range .items -}}
     {{- if eq .kind "Cluster" -}}
       {{- if ne .status.phase "Provisioned" }}0{{- end }}
