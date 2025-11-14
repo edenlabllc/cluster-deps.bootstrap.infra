@@ -23,7 +23,7 @@ hooks:
       command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-aws-cluster-ready.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Name }}`}}"
     preuninstall-postuninstall-delete-aws-cluster:
       events:
         - preuninstall
@@ -31,8 +31,8 @@ hooks:
       command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-aws-cluster.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ env "NAME" }}`}}'
-        - 'false'
+        - "{{`{{ env "NAME" }}`}}"
+        - "false"
     preuninstall-postuninstall-delete-aws-cluster-wait:
       events:
         - postuninstall
@@ -40,8 +40,8 @@ hooks:
       command: "{{`{{ .Release.Labels.bin }}`}}/preuninstall-postuninstall-delete-aws-cluster.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ env "NAME" }}`}}'
-        - 'true'
+        - "{{`{{ env "NAME" }}`}}"
+        - "true"
   aws-iam-provision:
     postsync-wait-aws-iam-provision-ready:
       events:
@@ -50,7 +50,7 @@ hooks:
       command: "{{`{{ .Release.Labels.bin }}`}}/postsync-wait-aws-iam-provision-ready.sh"
       args:
         - "{{`{{ .Release.Namespace }}`}}"
-        - '{{`{{ .Release.Name }}`}}'
+        - "{{`{{ .Release.Name }}`}}"
   azure-cluster:
     postsync-wait-azure-cluster-ready:
       events:

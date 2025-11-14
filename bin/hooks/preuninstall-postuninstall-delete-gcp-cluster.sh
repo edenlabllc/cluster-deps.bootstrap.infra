@@ -3,10 +3,10 @@
 set -e
 
 NAMESPACE="${1}"
-RELEASE_NAME="${2}"
+CLUSTER_NAME="${2}"
 WAIT_FOR_CLUSTER_DELETION="${3:-false}"
 
-kubectl --namespace "${NAMESPACE}" delete cluster --selector "app.kubernetes.io/instance=${RELEASE_NAME}" --wait="${WAIT_FOR_CLUSTER_DELETION}"
+kubectl --namespace "${NAMESPACE}" delete cluster "${CLUSTER_NAME}" --wait="${WAIT_FOR_CLUSTER_DELETION}"
 
 # Required for correct release removal of gcp-cluster via Helm
 sleep 3
