@@ -2,11 +2,11 @@
 
 set -e
 
-NAMESPACE="${1}"
-RELEASE_NAME="${2}"
-LIMIT="${3:-120}"
+readonly NAMESPACE="${1}"
+readonly RELEASE_NAME="${2}"
+readonly LIMIT="${3:-120}"
 
-GO_TEMPLATE='
+readonly GO_TEMPLATE='
   {{- range .items -}}
     {{- if not .status }}0{{- end }}
     {{- if ne .status.phase "Provisioned" }}0{{- end }}
