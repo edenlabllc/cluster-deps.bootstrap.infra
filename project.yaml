@@ -24,10 +24,6 @@ inventory:
     secrets:
       version: v4.6.11
       url: https://github.com/jkroepke/helm-secrets
-  hooks:
-    helmfile.hooks.infra:
-      version: v1.37.0
-      url: git::https://github.com/edenlabllc/{{.Name}}.git?ref={{.Version}}
   tools:
     clusterctl:
       version: 1.7.4

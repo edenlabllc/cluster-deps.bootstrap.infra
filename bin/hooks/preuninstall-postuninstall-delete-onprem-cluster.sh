@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+readonly NAMESPACE="${1}"
+readonly RELEASE_NAME="${2}"
+readonly WAIT_FOR_CLUSTER_DELETION="${3:-false}"
+
+kubectl --namespace "${NAMESPACE}" delete cluster-api --selector "app.kubernetes.io/instance=${RELEASE_NAME}" --wait="${WAIT_FOR_CLUSTER_DELETION}"
