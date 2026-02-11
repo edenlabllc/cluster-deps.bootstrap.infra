@@ -1,5 +1,36 @@
 # Cluster Deps Release Notes
 
+## Release v2.0.0
+
+## What's new
+
+- Bumped `AWS EKS control plane` version to `v1.34.3`.
+
+## Bug fixes
+
+## Additional information
+
+- Starting with this release, the default `AWS EKS control plane` version is `v1.34.3`. \
+  As a result, newly clusters will be deployed with `v1.34.3`, and existing clusters may be upgraded to `v1.34.3` during provision.
+  
+  If you need to pin the `AWS EKS control plane` version, explicitly set it in `etc/deps/<environment>/values/aws-cluster.yaml.gotmpl`.
+  
+  For example:
+
+  ```yaml
+  controlPlane:
+    spec:
+      version: v1.32.7
+  ```
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v1.0.0
 
 ## What's new
