@@ -8,6 +8,35 @@ templates:
   machineRemoteServerSpec: &machineRemoteServerSpec
     # providerID will automatically be set by edenlabllc/on-premise-configurator.operators.infra
     k3sAirGapEnabled: false
+    # K3S >= 1.32 bundles Traefik v3 which ships Gateway API CRDs
+    # (httproutes.gateway.networking.k8s.io, etc.). These CRDs conflict with
+    # Linkerd's own Gateway API CRDs causing Helm ownership errors during
+    # install/upgrade of either chart. Pinning Traefik to v2 avoids the
+    # Gateway API CRD conflict entirely, since Traefik v2 does not use them.
+    # NOTE: the bundled Helm chart is still v3-era; v2 image is compatible
+    # for basic IngressRoute / Ingress usage but Gateway API features are
+    # unavailable (which is the desired state to avoid the conflict).
+    k3sExtraManifests:
+      traefik-v2.yaml: |
+        ---
+        apiVersion: helm.cattle.io/v1
+        kind: HelmChart
+        metadata:
+          name: traefik-crd
+          namespace: kube-system
+        spec:
+          chart: https://%{KUBERNETES_API}%/static/charts/traefik-crd-27.0.201+up27.0.2.tgz
+        ---
+        apiVersion: helm.cattle.io/v1
+        kind: HelmChartConfig
+        metadata:
+          name: traefik
+          namespace: kube-system
+        spec:
+          chart: https://%{KUBERNETES_API}%/static/charts/traefik-27.0.201+up27.0.2.tgz
+          valuesContent: |-
+            image:
+              tag: "2.11.24"
     k3sRole: server
     sshUser: root
 

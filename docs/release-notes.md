@@ -6,7 +6,7 @@
 
 - Bumped `onprem` `InfrastructureProvider` version to `v0.2.0`.
 - Bumped `onprem-cluster` chart version to `v0.2.0`.
-- Bumped `onprem-cluster` k3s version to `v1.34.4+k3s1`.
+- Bumped `onprem-cluster` k3s version to `v1.34.4+k3s1` with `traefik` downgraded to `v2` for backward compatibility.
 
 ## Bug fixes
 
