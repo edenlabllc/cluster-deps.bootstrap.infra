@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v2.1.1
+
+## What's new
+
+## Bug fixes
+
+- Bumped `onprem` `InfrastructureProvider` version to `v0.2.1` to fix a `CAPI` contract error in `metadata.yaml`.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v2.1.0
 
 ## What's new
