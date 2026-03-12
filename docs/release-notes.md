@@ -6,7 +6,7 @@
 
 ## Bug fixes
 
-- Bumped `onprem` `InfrastructureProvider` version to `v0.2.1` to fix a `CAPI` contract error in `metadata.yaml`.
+- Bumped `onprem` `InfrastructureProvider` version to `v0.2.1` to fix a `CAPI` provider contract error in `metadata.yaml`.
 
 ## Additional information
 
