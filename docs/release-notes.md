@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v2.1.2
+
+## What's new
+
+## Bug fixes
+
+- Bump `aws-iam-provision-operator` version to `v0.3.1` to fix potential stale `AWS` credentials usage in `IAM` client.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v2.1.1
 
 ## What's new
