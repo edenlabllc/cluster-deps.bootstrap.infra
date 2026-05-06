@@ -1,5 +1,23 @@
 # Cluster Deps Release Notes
 
+## Release v2.2.0
+
+## What's new
+
+- Added `ec2:CreateVolume` permission to IAM policy to allow creating volumes from snapshots. 
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v2.1.2
 
 ## What's new

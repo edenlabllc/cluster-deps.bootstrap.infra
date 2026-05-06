@@ -94,6 +94,13 @@ policies:
                 },
                 {
                     "Action": [
+                        "ec2:CreateVolume"
+                    ],
+                    "Effect": "Allow",
+                    "Resource": "arn:aws:ec2:{{ env "AWS_REGION" }}:*:snapshot/*"
+                },
+                {
+                    "Action": [
                         "ec2:DeleteVolume"
                     ],
                     "Condition": {
