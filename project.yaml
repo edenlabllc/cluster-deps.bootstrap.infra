@@ -38,7 +38,7 @@ inventory:
       os-linux: linux
       os-mac: darwin
     helm:
-      version: 4.2.2
+      version: 3.21.2
       url: https://get.helm.sh/{{.Name}}-v{{.Version}}-{{.Os}}-amd64.tar.gz
       checksum: https://get.helm.sh/{{.Name}}-v{{.Version}}-{{.Os}}-amd64.tar.gz.sha256sum
       os-linux: linux

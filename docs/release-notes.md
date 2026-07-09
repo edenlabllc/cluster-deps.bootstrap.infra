@@ -10,11 +10,18 @@
 
 ## Bug fixes
 
+- Pinned `helm` to `3.21.2` in `project.yaml` to avoid `Helm 4` plugin verification failures in `RMK` plugin install flow.
+
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
 
-No mandatory `project.yaml` updates are required for this release.
+```yaml
+inventory:
+  tools:
+    helm:
+      version: 3.21.2
+```
 
 ### List of updated releases
 
