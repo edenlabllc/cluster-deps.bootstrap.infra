@@ -141,7 +141,7 @@ releases:
   - name: aws-cluster
     namespace: capa-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/aws-cluster"
-    version: 0.3.0
+    version: 0.3.1
     labels:
       cluster: aws
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
