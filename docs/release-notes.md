@@ -11,6 +11,7 @@
 ## Bug fixes
 
 - Pinned `helm` to `3.21.2` in `project.yaml` to avoid `Helm 4` plugin verification failures in `RMK` plugin install flow.
+- Increased `capi-cluster` k3d wait timeout to `300s` to prevent bootstrap failures while `cert-manager` images are pulled and webhooks become ready.
 
 ## Additional information
 
