@@ -110,7 +110,7 @@ releases:
   - name: clusterctl-config
     namespace: kube-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/clusterctl-config"
-    version: 0.1.2
+    version: 0.2.0
     labels:
       config: clusterctl
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}

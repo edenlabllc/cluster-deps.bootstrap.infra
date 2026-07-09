@@ -1,5 +1,27 @@
 # Cluster Deps Release Notes
 
+## Release v3.0.0
+
+## What's new
+
+- Bumped `CAPI` core / kubeadm bootstrap / kubeadm control-plane providers to `v1.12.9` for Kubernetes `v1.36` compatibility.
+- Bumped `CAPA` (`aws` InfrastructureProvider) to `v2.11.1` to align AWS provider support with Kubernetes `v1.36` testing.
+- Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
+
+## Bug fixes
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+No mandatory `project.yaml` updates are required for this release.
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v2.2.0
 
 ## What's new
