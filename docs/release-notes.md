@@ -4,8 +4,8 @@
 
 ## What's new
 
-- Bumped `CAPI` core / kubeadm bootstrap / kubeadm control-plane providers to `v1.12.9` for Kubernetes `v1.36` compatibility.
-- Bumped `CAPA` (`aws` InfrastructureProvider) to `v2.11.1` to align AWS provider support with Kubernetes `v1.36` testing.
+- Bumped `aws-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `clusterctl-config` chart version to `0.2.0` with provider URLs pinned to CAPI `v1.12.9` / CAPA `v2.11.1`.
 - Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
 
 ## Bug fixes
@@ -26,6 +26,17 @@ inventory:
 ```
 
 ### List of updated releases
+
+```yaml
+  - name: aws-cluster
+    chart: core-charts/aws-cluster
+    version: 0.3.0
+  - name: clusterctl-config
+    chart: core-charts/clusterctl-config
+    version: 0.2.0
+```
+
+Unchanged in this release: `aws-iam-provision` (`0.2.1`), `aws-iam-provision-operator` / `app` (`2.2.0`).
 
 ### List of added releases
 
