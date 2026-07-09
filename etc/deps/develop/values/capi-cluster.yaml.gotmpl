@@ -7,7 +7,7 @@ files: ~
 options:
   k3d: # k3d runtime settings
     wait: true # wait for cluster to be usable before returning; same as `--wait` (default: true)
-    timeout: "300s" # cert-manager and CAPI bootstrap can exceed the default 60s on cold image pulls
+    timeout: "600s" # cold k3s/CAPI/cert-manager image pulls can exceed shorter waits on first create
     disableLoadbalancer: true # same as `--no-lb`
     disableRollback: true # same as `--no-Rollback`
   k3s: # options passed on to K3s itself

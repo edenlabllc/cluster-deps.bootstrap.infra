@@ -11,7 +11,7 @@
 ## Bug fixes
 
 - Pinned `helm` to `3.21.2` in `project.yaml` to avoid `Helm 4` plugin verification failures in `RMK` plugin install flow.
-- Increased `capi-cluster` k3d wait timeout to `300s` to prevent bootstrap failures while `cert-manager` images are pulled and webhooks become ready.
+- Increased `capi-cluster` k3d wait timeout to `600s` to prevent bootstrap failures while `k3s`, `cert-manager`, and CAPI images are pulled on first create.
 - Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
 
 ## Additional information
