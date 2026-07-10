@@ -10,6 +10,7 @@
 - Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
 - Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
 - Bumped `onprem-cluster` chart version to `0.3.0` and default k3s version to `v1.36.2+k3s1` (aligned with AWS/k3d 1.36 path).
+- Bumped `app` chart version (`appChartVersion`) to `2.2.0` for `aws-iam-provision-operator`.
 
 ## Bug fixes
 
@@ -46,9 +47,12 @@ inventory:
   - name: onprem-cluster
     chart: core-charts/onprem-cluster
     version: 0.3.0
+  - name: aws-iam-provision-operator
+    chart: core-charts/app
+    version: 2.2.0
 ```
 
-Unchanged in this release: `aws-iam-provision` (`0.2.1`), `aws-iam-provision-operator` / `app` (`2.2.0`).
+Unchanged in this release: `aws-iam-provision` (`0.2.1`).
 
 ### List of added releases
 
