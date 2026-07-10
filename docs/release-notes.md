@@ -7,6 +7,9 @@
 - Bumped `aws-cluster` chart version to `0.3.1` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
 - Bumped `clusterctl-config` chart version to `0.2.0` with provider URLs pinned to CAPI `v1.12.9` / CAPA `v2.11.1`.
 - Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
+- Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
+- Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
+- Bumped `onprem-cluster` chart version to `0.3.0` and default k3s version to `v1.36.2+k3s1` (aligned with AWS/k3d 1.36 path).
 
 ## Bug fixes
 
@@ -34,6 +37,15 @@ inventory:
   - name: clusterctl-config
     chart: core-charts/clusterctl-config
     version: 0.2.0
+  - name: capi-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.3.0
+  - name: k3d-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.3.0
+  - name: onprem-cluster
+    chart: core-charts/onprem-cluster
+    version: 0.3.0
 ```
 
 Unchanged in this release: `aws-iam-provision` (`0.2.1`), `aws-iam-provision-operator` / `app` (`2.2.0`).
