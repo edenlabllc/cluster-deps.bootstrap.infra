@@ -10,8 +10,8 @@ readonly GO_TEMPLATE='
   {{- range .items -}}
     {{- if eq .kind "Cluster" -}}
       {{- if ne .status.phase "Provisioned" }}0{{- end }}
-      {{- if not .status.controlPlaneReady }}0{{- end }}
-      {{- if not .status.infrastructureReady }}0{{- end }}
+      {{- if not .status.initialization.controlPlaneInitialized }}0{{- end }}
+      {{- if not .status.initialization.infrastructureProvisioned }}0{{- end }}
     {{- end -}}
     {{- if eq .kind "AWSManagedCluster" -}}
       {{- if not .status.ready }}0{{- end }}
@@ -25,8 +25,8 @@ readonly GO_TEMPLATE='
     {{- end -}}
     {{- if eq .kind "MachinePool" -}}
       {{- if ne .status.phase "Running" }}0{{- end }}
-      {{- if not .status.bootstrapReady }}0{{- end }}
-      {{- if not .status.infrastructureReady }}0{{- end }}
+      {{- if not .status.initialization.bootstrapDataSecretCreated }}0{{- end }}
+      {{- if not .status.initialization.infrastructureProvisioned }}0{{- end }}
     {{- end -}}
   {{- end -}}
 '

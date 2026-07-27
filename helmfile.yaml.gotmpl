@@ -65,7 +65,7 @@ commonLabels:
   scope: deps
   bin: bin/hooks
   repo: core-charts
-  appChartVersion: 2.1.0
+  appChartVersion: 2.2.0
 
 templates:
   release:
@@ -100,7 +100,7 @@ releases:
   - name: capi-cluster
     namespace: kube-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/k3d-cluster"
-    version: 0.2.0
+    version: 0.3.0
     labels:
       cluster: capi
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
@@ -110,7 +110,7 @@ releases:
   - name: clusterctl-config
     namespace: kube-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/clusterctl-config"
-    version: 0.1.2
+    version: 0.2.0
     labels:
       config: clusterctl
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
@@ -120,7 +120,7 @@ releases:
   - name: k3d-cluster
     namespace: kube-system
     chart: "{{`{{ .Release.Labels.repo }}`}}/k3d-cluster"
-    version: 0.2.0
+    version: 0.3.0
     labels:
       cluster: k3d
     installed: {{ and (eq (env "K3D_CLUSTER" | default "false") "true") (eq (env "RMK_COMMAND_CATEGORY") "k3d") }}
@@ -141,7 +141,7 @@ releases:
   - name: aws-cluster
     namespace: capa-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/aws-cluster"
-    version: 0.2.1
+    version: 0.3.2
     labels:
       cluster: aws
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
@@ -211,7 +211,7 @@ releases:
   - name: onprem-cluster
     namespace: capop-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/onprem-cluster"
-    version: 0.2.0
+    version: 0.3.0
     labels:
       cluster: onprem
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}

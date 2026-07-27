@@ -1,5 +1,63 @@
 # Cluster Deps Release Notes
 
+## Release v3.0.0
+
+## What's new
+
+- Bumped `aws-cluster` chart version to `0.3.2` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `clusterctl-config` chart version to `0.2.0` with provider URLs pinned to CAPI `v1.12.9` / CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
+- Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
+- Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
+- Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
+- Bumped `onprem-cluster` chart version to `0.3.0` and default k3s version to `v1.36.2+k3s1` (aligned with AWS/k3d 1.36 path).
+- Bumped `app` chart version (`appChartVersion`) to `2.2.0` for `aws-iam-provision-operator`.
+
+## Bug fixes
+
+- Pinned `helm` to `3.21.2` in `project.yaml` to avoid `Helm 4` plugin verification failures in `RMK` plugin install flow.
+- Increased `capi-cluster` k3d wait timeout to `600s` to prevent bootstrap failures while `k3s`, `cert-manager`, and CAPI images are pulled on first create.
+- Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
+
+## Additional information
+
+### Mandatory updates for `project.yaml`
+
+```yaml
+inventory:
+  tools:
+    helm:
+      version: 3.21.2
+```
+
+### List of updated releases
+
+```yaml
+  - name: aws-cluster
+    chart: core-charts/aws-cluster
+    version: 0.3.2
+  - name: clusterctl-config
+    chart: core-charts/clusterctl-config
+    version: 0.2.0
+  - name: capi-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.3.0
+  - name: k3d-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.3.0
+  - name: onprem-cluster
+    chart: core-charts/onprem-cluster
+    version: 0.3.0
+  - name: aws-iam-provision-operator
+    chart: core-charts/app
+    version: 2.2.0
+```
+
+Unchanged in this release: `aws-iam-provision` (`0.2.1`).
+
+### List of added releases
+
+---
+
 ## Release v2.2.0
 
 ## What's new

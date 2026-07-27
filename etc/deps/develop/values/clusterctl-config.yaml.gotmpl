@@ -13,19 +13,21 @@ images: {}
 #  cert-manager:
 #    tag: v1.16.0
 
+# AWS path pinned for K8s 1.36 validation.
+# Other providers intentionally not bumped in this release.
 providers:
   - name: cluster-api
     type: CoreProvider
-    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.8.4/core-components.yaml
+    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.12.9/core-components.yaml
   - name: kubeadm
     type: BootstrapProvider
-    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.8.4/bootstrap-components.yaml
+    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.12.9/bootstrap-components.yaml
   - name: kubeadm
     type: ControlPlaneProvider
-    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.8.4/control-plane-components.yaml
+    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.12.9/control-plane-components.yaml
   - name: aws
     type: InfrastructureProvider
-    url: https://github.com/edenlabllc/cluster-api-provider-aws/releases/v2.8.3/infrastructure-components.yaml
+    url: https://github.com/edenlabllc/cluster-api-provider-aws/releases/v2.12.2/infrastructure-components.yaml
   - name: azure
     type: InfrastructureProvider
     url: https://github.com/kubernetes-sigs/cluster-api-provider-azure/releases/v1.17.0/infrastructure-components.yaml

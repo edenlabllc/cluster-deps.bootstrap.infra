@@ -45,11 +45,6 @@ controlPlane:
           isPublic: false
         {{- end }}
       vpc:
-        # AvailabilityZoneUsageLimit specifies the maximum number of availability zones (AZ) that
-        # should be used in a region when automatically creating subnets. If a region has more
-        # than this number of AZs then this number of AZs will be picked randomly when creating
-        # default subnets. Defaults to 3
-        availabilityZoneUsageLimit: {{ len $awsAvailabilityZones }}
         # CidrBlock is the CIDR block to be used when the provider creates a managed VPC.
         # Defaults to 10.0.0.0/16.
         cidrBlock: 10.0.0.0/16
@@ -57,7 +52,7 @@ controlPlane:
     # The AWS Region the cluster lives in.
     region: {{ $awsRegion }}
     sshKeyName: {{ env "NAME" }}
-    version: v1.34.3 # ^v?(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.?(\.0|[1-9][0-9]*)?$
+    version: v1.36.2 # ^v?(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.?(\.0|[1-9][0-9]*)?$
 
 ## The cluster identity configurations
 identity:
@@ -130,14 +125,15 @@ machinePools:
             # DataSecretName is the name of the secret that stores the bootstrap data script.
             # If nil, the Machine should remain in the Pending state.
             dataSecretName: ""
-          # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
-          # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
-          # Defaults to 10 seconds.
-          nodeDeletionTimeout: "10s"
-          # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
-          # The default value is 0, meaning that the node can be drained without any time limitations.
-          # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
-          nodeDrainTimeout: "0s"
-          # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
-          # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
-          nodeVolumeDetachTimeout: "0s"
+          deletion:
+            # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
+            # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
+            # Defaults to 10 seconds.
+            nodeDeletionTimeoutSeconds: 10
+            # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
+            # The default value is 0, meaning that the node can be drained without any time limitations.
+            # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
+            nodeDrainTimeoutSeconds: 0
+            # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
+            # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
+            nodeVolumeDetachTimeoutSeconds: 0
