@@ -4,7 +4,7 @@
 
 ## What's new
 
-- Bumped `aws-cluster` chart version to `0.3.1` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `aws-cluster` chart version to `0.3.2` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
 - Bumped `clusterctl-config` chart version to `0.2.0` with provider URLs pinned to CAPI `v1.12.9` / CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
 - Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
 - Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
@@ -34,7 +34,7 @@ inventory:
 ```yaml
   - name: aws-cluster
     chart: core-charts/aws-cluster
-    version: 0.3.1
+    version: 0.3.2
   - name: clusterctl-config
     chart: core-charts/clusterctl-config
     version: 0.2.0
