@@ -66,6 +66,8 @@ Unchanged in this release: `aws-iam-provision` (`0.2.1`).
 
 ## Bug fixes
 
+- Increased `capi-cluster` and `k3d-cluster` timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
+
 ## Additional information
 
 ### Mandatory updates for `project.yaml`
