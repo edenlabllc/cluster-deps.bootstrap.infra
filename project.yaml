@@ -16,7 +16,7 @@ project:
 inventory:
   helm-plugins:
     diff:
-      version: v3.15.10
+      version: v3.9.5
       url: https://github.com/databus23/helm-diff
     helm-git:
       version: v1.5.2

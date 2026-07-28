@@ -15,6 +15,7 @@
 ## Bug fixes
 
 - Pinned `helm` to `3.21.2` in `project.yaml` to avoid `Helm 4` plugin verification failures in `RMK` plugin install flow.
+- Pinned `helm-diff` plugin to `v3.9.5` for compatibility with environments still running older Helm (`v3.10.x`).
 - Increased `capi-cluster` and `k3d-cluster` k3d wait timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
 - Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
 
@@ -24,6 +25,9 @@
 
 ```yaml
 inventory:
+  helm-plugins:
+    diff:
+      version: v3.9.5
   tools:
     helm:
       version: 3.21.2
