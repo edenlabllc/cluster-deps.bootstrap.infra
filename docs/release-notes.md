@@ -8,6 +8,8 @@
 
 ## Bug fixes
 
+- Increased `capi-cluster` and `k3d-cluster` timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
+
 ## Additional information
 
 ### Mandatory updates for `project.yaml`

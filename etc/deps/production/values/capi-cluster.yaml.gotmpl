@@ -6,6 +6,7 @@ files: ~
 
 options:
   k3d: # k3d runtime settings
+    timeout: "300s" # wait timeout before aborting; same as `--timeout 300s`
     disableLoadbalancer: true # same as `--no-lb`
     disableRollback: true # same as `--no-Rollback`
   k3s: # options passed on to K3s itself
