@@ -15,7 +15,7 @@
 ## Bug fixes
 
 - Pinned `helm` to `3.21.2` in `project.yaml` to avoid `Helm 4` plugin verification failures in `RMK` plugin install flow.
-- Increased `capi-cluster` k3d wait timeout to `600s` to prevent bootstrap failures while `k3s`, `cert-manager`, and CAPI images are pulled on first create.
+- Increased `capi-cluster` and `k3d-cluster` k3d wait timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
 - Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
 
 ## Additional information
@@ -65,8 +65,6 @@ Unchanged in this release: `aws-iam-provision` (`0.2.1`).
 - Added `ec2:CreateVolume` permission to IAM policy to allow creating volumes from snapshots. 
 
 ## Bug fixes
-
-- Increased `capi-cluster` and `k3d-cluster` timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
 
 ## Additional information
 
