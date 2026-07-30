@@ -5,8 +5,13 @@
 ## What's new
 
 - Bumped `aws-cluster` chart version to `0.3.2` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
-- Bumped `clusterctl-config` chart version to `0.2.0` with provider URLs pinned to CAPI `v1.12.9` / CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
+- Bumped `azure-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `clusterctl-config` chart version to `0.3.0` with provider URLs pinned to: 
+  - CAPI `v1.13.4`
+  - CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
+  - CAPZ `v1.26.0`
 - Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
+- Bumped default `Azure AKS control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
 - Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
 - Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
 - Bumped `onprem-cluster` chart version to `0.3.0` and default k3s version to `v1.36.2+k3s1` (aligned with AWS/k3d 1.36 path).
@@ -19,6 +24,21 @@
 - Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
 
 ## Additional information
+
+Added support for overridesFolder in the `clusterctl` config, allowing locally patched provider manifests 
+to be used instead of the ones `clusterctl` downloads from the GitHub release. 
+Patched manifests are stored under `etc/deps/<envirnment>/values/cluster-api/overrides` 
+(per-environment, following the existing <env>/values/... layout).
+
+The following changes were made to infrastructure-components.yaml for CAPZ v1.26.0 compared to the original release file:
+
+* Removed `deprecated/deprecationWarning` from the AzureManaged* CRDs to silence deprecation 
+  log noise for the still-supported API.
+* Reduced `azureserviceoperator-controller-manager` replica 
+  count (HA with 2 replicas isn't needed for our ephemeral management cluster).
+* Removed DELETE from the `validation.azuremanagedmachinepools` webhook rules — this webhook 
+  otherwise blocks deleting the last system node pool even when tearing down the whole cluster, 
+  causing `clusterctl/Helm` hooks to fail with a Forbidden error during teardown (known CAPZ issue, see #2656).
 
 ### Mandatory updates for `project.yaml`
 
@@ -35,9 +55,12 @@ inventory:
   - name: aws-cluster
     chart: core-charts/aws-cluster
     version: 0.3.2
+  - name: azure-cluster
+    chart: core-charts/aws-cluster
+    version: 0.3.0
   - name: clusterctl-config
     chart: core-charts/clusterctl-config
-    version: 0.2.0
+    version: 0.3.0
   - name: capi-cluster
     chart: core-charts/k3d-cluster
     version: 0.3.0
