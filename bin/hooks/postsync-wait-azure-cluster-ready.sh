@@ -6,14 +6,12 @@ readonly NAMESPACE="${1}"
 readonly RELEASE_NAME="${2}"
 readonly LIMIT="${3:-1200}"
 
-# CAPI v1beta2: Cluster/MachinePool use status.initialization.*
-# Azure managed provider CRs still expose status.ready / status.initialized.
 readonly GO_TEMPLATE='
   {{- range .items -}}
     {{- if eq .kind "Cluster" -}}
       {{- if ne .status.phase "Provisioned" }}0{{- end }}
-      {{- if not .status.initialization.controlPlaneInitialized }}0{{- end }}
-      {{- if not .status.initialization.infrastructureProvisioned }}0{{- end }}
+      {{- if not .status.controlPlaneReady }}0{{- end }}
+      {{- if not .status.infrastructureReady }}0{{- end }}
     {{- end -}}
     {{- if eq .kind "AzureManagedCluster" -}}
       {{- if not .status.ready }}0{{- end }}
@@ -27,8 +25,8 @@ readonly GO_TEMPLATE='
     {{- end -}}
     {{- if eq .kind "MachinePool" -}}
       {{- if ne .status.phase "Running" }}0{{- end }}
-      {{- if not .status.initialization.bootstrapDataSecretCreated }}0{{- end }}
-      {{- if not .status.initialization.infrastructureProvisioned }}0{{- end }}
+      {{- if not .status.bootstrapReady }}0{{- end }}
+      {{- if not .status.infrastructureReady }}0{{- end }}
     {{- end -}}
   {{- end -}}
 '
