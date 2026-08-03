@@ -6,29 +6,29 @@ readonly NAMESPACE="${1}"
 readonly RELEASE_NAME="${2}"
 readonly LIMIT="${3:-3600}"
 
+# CAPI v1beta2: readiness under status.initialization.*
 readonly GO_TEMPLATE='
   {{- range .items -}}
     {{- if eq .kind "Cluster" -}}
       {{- if ne .status.phase "Provisioned" }}0{{- end }}
-      {{- if not .status.controlPlaneReady }}0{{- end }}
-      {{- if not .status.infrastructureReady }}0{{- end }}
+      {{- if not .status.initialization.controlPlaneInitialized }}0{{- end }}
+      {{- if not .status.initialization.infrastructureProvisioned }}0{{- end }}
     {{- end -}}
     {{- if eq .kind "K3SCluster" -}}
       {{- if ne .status.phase "Provisioned" }}0{{- end }}
-      {{- if not .status.ready }}0{{- end }}
+      {{- if not .status.initialization.provisioned }}0{{- end }}
     {{- end -}}
     {{- if eq .kind "K3SControlPlane" -}}
       {{- if ne .status.phase "Provisioned" }}0{{- end }}
-      {{- if not .status.ready }}0{{- end }}
-      {{- if not .status.initialized }}0{{- end }}
+      {{- if not .status.initialization.controlPlaneInitialized }}0{{- end }}
     {{- end -}}
     {{- if eq .kind "K3SRemoteMachine" -}}
       {{- if ne .status.phase "Installed" }}0{{- end }}
-      {{- if not .status.ready }}0{{- end -}}
+      {{- if not .status.initialization.provisioned }}0{{- end -}}
     {{- end -}}
     {{- if eq .kind "Machine" -}}
       {{- if not (or (eq .status.phase "Provisioned") (eq .status.phase "Running")) }}0{{- end }}
-      {{- if not .status.infrastructureReady }}0{{- end }}
+      {{- if not .status.initialization.infrastructureProvisioned }}0{{- end }}
     {{- end -}}
   {{- end -}}
 '

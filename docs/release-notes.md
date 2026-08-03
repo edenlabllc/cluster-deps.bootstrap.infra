@@ -17,6 +17,8 @@
 - Pinned `helm` to `3.21.2` in `project.yaml` to keep RMK Helm plugin compatibility (including `helm-diff`) in this release flow.
 - Increased `capi-cluster` and `k3d-cluster` k3d wait timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
 - Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
+- Fixed `postsync-wait-azure-cluster-ready.sh` / `postsync-wait-gcp-cluster-ready.sh` for CAPI `v1beta2` (`Cluster` / `MachinePool` `status.initialization.*`; managed provider CRs keep `status.ready` / `status.initialized`).
+- Fixed `postsync-wait-onprem-cluster-ready.sh` for CAPI `v1beta2` (`status.initialization.*` only). Requires onprem provider release with `metadata.yaml` contract `v1beta2` (e.g. `v0.3.0`).
 
 ## Additional information
 
