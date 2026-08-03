@@ -10,6 +10,7 @@
 - Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
 - Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
 - Bumped `onprem-cluster` chart version to `0.3.0` and default k3s version to `v1.36.2+k3s1` (aligned with AWS/k3d 1.36 path).
+- Bumped `onprem-cluster` chart version to `0.3.1` (sanitize `app.kubernetes.io/version` label: `+` → `-`).
 - Bumped `app` chart version (`appChartVersion`) to `2.2.0` for `aws-iam-provision-operator`.
 
 ## Bug fixes
@@ -19,6 +20,7 @@
 - Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
 - Fixed `postsync-wait-azure-cluster-ready.sh` / `postsync-wait-gcp-cluster-ready.sh` for CAPI `v1beta2` (`Cluster` / `MachinePool` `status.initialization.*`; managed provider CRs keep `status.ready` / `status.initialized`).
 - Fixed `postsync-wait-onprem-cluster-ready.sh` for CAPI `v1beta2` (`status.initialization.*` only). Requires onprem provider release with `metadata.yaml` contract `v1beta2` (e.g. `v0.3.0`).
+- Fixed `onprem-cluster` `0.3.1`: `app.kubernetes.io/version` from `Chart.AppVersion` (`v1.36.2+k3s1`) is rewritten to `v1.36.2-k3s1` so Cluster labels pass Kubernetes validation.
 
 ## Additional information
 
@@ -48,7 +50,7 @@ inventory:
     version: 0.3.0
   - name: onprem-cluster
     chart: core-charts/onprem-cluster
-    version: 0.3.0
+    version: 0.3.1
   - name: aws-iam-provision-operator
     chart: core-charts/app
     version: 2.2.0
