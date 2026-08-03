@@ -14,7 +14,8 @@
 - Bumped default `Azure AKS control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
 - Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
 - Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
-- Bumped `onprem-cluster` chart version to `0.3.0` and default k3s version to `v1.36.2+k3s1` (aligned with AWS/k3d 1.36 path).
+- Bumped `onprem-cluster` chart version to `0.3.2` (default k3s `v1.36.2+k3s1`; sanitize `app.kubernetes.io/version` `+` → `-`; `Cluster` / `Machine` → `cluster.x-k8s.io/v1beta2` with `apiGroup` refs).
+- Bumped `onprem` `InfrastructureProvider` version to `v0.3.0` (`metadata.yaml` contract `v1beta2`, `status.initialization.*`, CRD `cluster.x-k8s.io/v1beta2` label).
 - Bumped `app` chart version (`appChartVersion`) to `2.2.0` for `aws-iam-provision-operator`.
 
 ## Bug fixes
@@ -22,6 +23,7 @@
 - Pinned `helm` to `3.21.2` in `project.yaml` to keep RMK Helm plugin compatibility (including `helm-diff`) in this release flow.
 - Increased `capi-cluster` and `k3d-cluster` k3d wait timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
 - Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
+- Fixed `postsync-wait-onprem-cluster-ready.sh` for CAPI `v1beta2` (`status.initialization.*` only). Requires onprem provider `v0.3.0+`.
 
 ## Additional information
 
@@ -69,7 +71,7 @@ inventory:
     version: 0.3.0
   - name: onprem-cluster
     chart: core-charts/onprem-cluster
-    version: 0.3.0
+    version: 0.3.2
   - name: aws-iam-provision-operator
     chart: core-charts/app
     version: 2.2.0
