@@ -6,6 +6,8 @@ readonly NAMESPACE="${1}"
 readonly RELEASE_NAME="${2}"
 readonly LIMIT="${3:-1200}"
 
+# CAPI v1beta2: Cluster/MachinePool use status.initialization.*
+# Azure managed provider CRs still expose status.ready / status.initialized.
 readonly GO_TEMPLATE='
   {{- range .items -}}
     {{- if eq .kind "Cluster" -}}
