@@ -10,7 +10,7 @@ cluster:
   name: {{ env "NAME" }}
 
   # Project is the name of the project to deploy the cluster to, required.
-  project: {{ env "GCP_PROJECT_ID" }}
+  project: {{ env "GCP_PROJECT" }}
 
   region: {{ $gcpRegion }}
   managed:
@@ -43,7 +43,7 @@ controlPlane:
     clusterNetwork:
       privateCluster:
         enablePrivateNodes: true
-    version: v1.30.10
+    version: v1.36.2
 
 machinePools:
   app:
@@ -55,8 +55,8 @@ machinePools:
         # AdditionalLabels is an optional set of tags to add to GCP resources managed by the GCP provider, in addition to the ones added by default.
         additionalLabels: {}
         # DiskSizeGb is the size of the disk attached to each node, specified in GB.
-        # The smallest allowed disk size is 10GB. If unspecified, the default disk size is 100GB.
-        diskSizeGb: 10
+        # The smallest allowed disk size is 12GB. If unspecified, the default disk size is 100GB.
+        diskSizeGb: 15
         # DiskType is type of the disk attached to each node.
         # "pd-standard", "pd-ssd", "pd-balanced"
         diskType: "pd-ssd"
@@ -106,14 +106,15 @@ machinePools:
             # DataSecretName is the name of the secret that stores the bootstrap data script.
             # If nil, the Machine should remain in the Pending state.
             dataSecretName: ""
-          # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
-          # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
-          # Defaults to 10 seconds.
-          nodeDeletionTimeout: "10s"
-          # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
-          # The default value is 0, meaning that the node can be drained without any time limitations.
-          # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
-          nodeDrainTimeout: "0s"
-          # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
-          # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
-          nodeVolumeDetachTimeout: "0s"
+          deletion:
+            # NodeDeletionTimeout defines how long the controller will attempt to delete the Node that the Machine
+            # hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely.
+            # Defaults to 10 seconds.
+            nodeDeletionTimeoutSeconds: 10
+            # NodeDrainTimeout is the total amount of time that the controller will spend on draining a node.
+            # The default value is 0, meaning that the node can be drained without any time limitations.
+            # NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
+            nodeDrainTimeoutSeconds: 0
+            # NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes
+            # to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
+            nodeVolumeDetachTimeoutSeconds: 0

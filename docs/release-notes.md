@@ -6,12 +6,15 @@
 
 - Bumped `aws-cluster` chart version to `0.3.2` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
 - Bumped `azure-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `gcp-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
 - Bumped `clusterctl-config` chart version to `0.3.0` with provider URLs pinned to: 
   - CAPI `v1.13.4`
   - CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
+  - CAPG `v1.13.1`
   - CAPZ `v1.26.0`
 - Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
 - Bumped default `Azure AKS control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
+- Bumped default `GCP GKE control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
 - Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
 - Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
 - Bumped `onprem-cluster` chart version to `0.3.2` (default k3s `v1.36.2+k3s1`; sanitize `app.kubernetes.io/version` `+` → `-`; `Cluster` / `Machine` → `cluster.x-k8s.io/v1beta2` with `apiGroup` refs).
@@ -57,6 +60,9 @@ inventory:
   - name: aws-cluster
     chart: core-charts/aws-cluster
     version: 0.3.2
+  - name: aws-iam-provision-operator
+    chart: core-charts/app
+    version: 2.2.0
   - name: azure-cluster
     chart: core-charts/aws-cluster
     version: 0.3.0
@@ -66,15 +72,15 @@ inventory:
   - name: capi-cluster
     chart: core-charts/k3d-cluster
     version: 0.3.0
+  - name: gcp-cluster
+    chart: core-charts/gcp-cluster
+    version: 0.3.0
   - name: k3d-cluster
     chart: core-charts/k3d-cluster
     version: 0.3.0
   - name: onprem-cluster
     chart: core-charts/onprem-cluster
     version: 0.3.2
-  - name: aws-iam-provision-operator
-    chart: core-charts/app
-    version: 2.2.0
 ```
 
 Unchanged in this release: `aws-iam-provision` (`0.2.1`).
