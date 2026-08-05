@@ -10,7 +10,7 @@
 - Bumped `clusterctl-config` chart version to `0.3.0` with provider URLs pinned to: 
   - CAPI `v1.13.4`
   - CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
-  - CAPG `v1.13.1`
+  - CAPG `v1.13.2`
   - CAPZ `v1.26.0`
 - Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
 - Bumped default `Azure AKS control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
