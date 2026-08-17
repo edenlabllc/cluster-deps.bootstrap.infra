@@ -28,13 +28,13 @@ overridesFolder: {{ $path }}etc/deps/{{ .Environment.Name }}/values/cluster-api/
 providers:
   - name: cluster-api
     type: CoreProvider
-    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.13.4/core-components.yaml
+    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.13.5/core-components.yaml
   - name: kubeadm
     type: BootstrapProvider
-    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.13.4/bootstrap-components.yaml
+    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.13.5/bootstrap-components.yaml
   - name: kubeadm
     type: ControlPlaneProvider
-    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.13.4/control-plane-components.yaml
+    url: https://github.com/kubernetes-sigs/cluster-api/releases/v1.13.5/control-plane-components.yaml
   - name: aws
     type: InfrastructureProvider
     url: https://github.com/edenlabllc/cluster-api-provider-aws/releases/v2.12.2/infrastructure-components.yaml

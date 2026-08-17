@@ -8,10 +8,23 @@
 - Bumped `azure-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
 - Bumped `gcp-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
 - Bumped `clusterctl-config` chart version to `0.3.0` with provider URLs pinned to: 
-  - CAPI `v1.13.4`
+  - CAPI `v1.13.5`
   - CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
   - CAPG `v1.13.1`
   - CAPZ `v1.26.0`
+- Bumped CLI tools and Helm plugins in `project.yaml` for Kubernetes `1.36` / CAPI `v1.13.5`:
+  - `clusterctl` `1.8.4` → `1.13.5`
+  - `kubectl` `1.30.10` → `1.36.2`
+  - `helmfile` `1.1.7` → `1.7.0`
+  - `sops` `3.8.1` → `3.13.2`
+  - `age` `1.1.1` → `1.3.1`
+  - `k3d` `5.8.3` → `5.9.0`
+  - `yq` `4.35.2` → `4.53.3`
+  - `aws-iam-authenticator` `0.6.27` → `0.7.18`
+  - `gke-auth-plugin` `0.1.1` → `0.6.3`
+  - `helm-diff` `v3.8.1` → `v3.15.10`
+  - `helm-git` `v0.15.1` → `v1.5.2`
+  - `helm-secrets` `v4.6.11` → `v4.7.7`
 - Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
 - Bumped default `Azure AKS control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
 - Bumped default `GCP GKE control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
@@ -49,9 +62,34 @@ The following changes were made to infrastructure-components.yaml for CAPZ v1.26
 
 ```yaml
 inventory:
+  helm-plugins:
+    diff:
+      version: v3.15.10
+    helm-git:
+      version: v1.5.2
+    secrets:
+      version: v4.7.7
   tools:
+    clusterctl:
+      version: 1.13.5
+    kubectl:
+      version: 1.36.2
     helm:
       version: 3.21.2
+    helmfile:
+      version: 1.7.0
+    sops:
+      version: 3.13.2
+    age:
+      version: 1.3.1
+    k3d:
+      version: 5.9.0
+    yq:
+      version: 4.53.3
+    aws-iam-authenticator:
+      version: 0.7.18
+    gke-auth-plugin:
+      version: 0.6.3
 ```
 
 ### List of updated releases
