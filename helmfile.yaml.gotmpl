@@ -141,7 +141,7 @@ releases:
   - name: aws-cluster
     namespace: capa-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/aws-cluster"
-    version: 0.3.2
+    version: 0.3.3
     labels:
       cluster: aws
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
@@ -177,7 +177,7 @@ releases:
   - name: azure-cluster
     namespace: capz-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/azure-cluster"
-    version: 0.3.0
+    version: 0.3.1
     labels:
       cluster: azure
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}
@@ -194,7 +194,7 @@ releases:
   - name: gcp-cluster
     namespace: capg-{{ env "NAME" }}
     chart: "{{`{{ .Release.Labels.repo }}`}}/gcp-cluster"
-    version: 0.3.0
+    version: 0.3.1
     labels:
       cluster: gcp
     installed: {{ eq (env "CAPI_CLUSTER" | default "false") "true" }}

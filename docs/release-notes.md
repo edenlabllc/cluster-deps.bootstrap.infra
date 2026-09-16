@@ -4,9 +4,9 @@
 
 ## What's new
 
-- Bumped `aws-cluster` chart version to `0.3.2` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
-- Bumped `azure-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
-- Bumped `gcp-cluster` chart version to `0.3.0` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `aws-cluster` chart version to `0.3.3` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `azure-cluster` chart version to `0.3.1` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `gcp-cluster` chart version to `0.3.1` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
 - Bumped `clusterctl-config` chart version to `0.3.0` with provider URLs pinned to: 
   - CAPI `v1.13.5`
   - CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
@@ -97,13 +97,13 @@ inventory:
 ```yaml
   - name: aws-cluster
     chart: core-charts/aws-cluster
-    version: 0.3.2
+    version: 0.3.3
   - name: aws-iam-provision-operator
     chart: core-charts/app
     version: 2.2.0
   - name: azure-cluster
     chart: core-charts/aws-cluster
-    version: 0.3.0
+    version: 0.3.1
   - name: clusterctl-config
     chart: core-charts/clusterctl-config
     version: 0.3.0
@@ -112,7 +112,7 @@ inventory:
     version: 0.3.0
   - name: gcp-cluster
     chart: core-charts/gcp-cluster
-    version: 0.3.0
+    version: 0.3.1
   - name: k3d-cluster
     chart: core-charts/k3d-cluster
     version: 0.3.0
