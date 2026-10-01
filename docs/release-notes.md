@@ -1,5 +1,132 @@
 # Cluster Deps Release Notes
 
+## Release v3.0.0
+
+## What's new
+
+- Bumped `aws-cluster` chart version to `0.3.3` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `azure-cluster` chart version to `0.3.1` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `gcp-cluster` chart version to `0.3.1` for CAPI `v1beta2` `Cluster` / `MachinePool` manifests.
+- Bumped `clusterctl-config` chart version to `0.3.0` with provider URLs pinned to: 
+  - CAPI `v1.13.5`
+  - CAPA `v2.12.2` (`edenlabllc/cluster-api-provider-aws` fork).
+  - CAPG `v1.13.2`
+  - CAPZ `v1.26.0`
+- Bumped CLI tools and Helm plugins in `project.yaml` for Kubernetes `1.36` / CAPI `v1.13.5`:
+  - `clusterctl` `1.8.4` → `1.13.5`
+  - `kubectl` `1.30.10` → `1.36.2`
+  - `helmfile` `1.1.7` → `1.7.0`
+  - `sops` `3.8.1` → `3.13.2`
+  - `age` `1.1.1` → `1.3.1`
+  - `k3d` `5.8.3` → `5.9.0`
+  - `yq` `4.35.2` → `4.53.3`
+  - `aws-iam-authenticator` `0.6.27` → `0.7.18`
+  - `gke-auth-plugin` `0.1.1` → `0.6.3`
+  - `helm-diff` `v3.8.1` → `v3.15.10`
+  - `helm-git` `v0.15.1` → `v1.5.2`
+  - `helm-secrets` `v4.6.11` → `v4.7.7`
+- Bumped default `AWS EKS control plane` version to `v1.36.2` for immediate validation on a currently supported EKS patch.
+- Bumped default `Azure AKS control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
+- Bumped default `GCP GKE control plane` version to `v1.36.2` for immediate validation on a currently supported AKS patch.
+- Bumped `capi-cluster` / `k3d-cluster` chart version to `0.3.0` (`appVersion` `v1.36.2` → default image `rancher/k3s:v1.36.2-k3s1`).
+- Explicitly pinned `capi-cluster` and `k3d-cluster` image to `rancher/k3s:v1.36.2-k3s1` in values (same as chart default; keeps K8s version visible in this repo).
+- Bumped `onprem-cluster` chart version to `0.3.2` (default k3s `v1.36.2+k3s1`; sanitize `app.kubernetes.io/version` `+` → `-`; `Cluster` / `Machine` → `cluster.x-k8s.io/v1beta2` with `apiGroup` refs).
+- Bumped `onprem` `InfrastructureProvider` version to `v0.3.1` (`metadata.yaml` contract `v1beta2`, `status.initialization.*`, CRD `cluster.x-k8s.io/v1beta2` label, `K3SCluster` readiness reconcile fix without `json_query`/`jmespath` dependency).
+- Bumped `app` chart version (`appChartVersion`) to `2.2.0` for `aws-iam-provision-operator`.
+
+## Bug fixes
+
+- Pinned `helm` to `3.21.2` in `project.yaml` to keep RMK Helm plugin compatibility (including `helm-diff`) in this release flow.
+- Increased `capi-cluster` and `k3d-cluster` k3d wait timeouts to `300s` in develop/staging/production to reduce startup failures on slower image pulls.
+- Fixed `postsync-wait-aws-cluster-ready.sh` for CAPI `v1beta2` by mapping removed `v1beta1` status booleans to `status.initialization` fields while keeping the original readiness checks.
+- Fixed `postsync-wait-onprem-cluster-ready.sh` for CAPI `v1beta2` (`status.initialization.*` only). Requires onprem provider `v0.3.1+`.
+
+## Additional information
+
+Added support for overridesFolder in the `clusterctl` config, allowing locally patched provider manifests 
+to be used instead of the ones `clusterctl` downloads from the GitHub release. 
+Patched manifests are stored under `etc/deps/<envirnment>/values/cluster-api/overrides` 
+(per-environment, following the existing <env>/values/... layout).
+
+The following changes were made to infrastructure-components.yaml for CAPZ v1.26.0 compared to the original release file:
+
+* Removed `deprecated/deprecationWarning` from the AzureManaged* CRDs to silence deprecation 
+  log noise for the still-supported API.
+* Reduced `azureserviceoperator-controller-manager` replica 
+  count (HA with 2 replicas isn't needed for our ephemeral management cluster).
+* Removed DELETE from the `validation.azuremanagedmachinepools` webhook rules — this webhook 
+  otherwise blocks deleting the last system node pool even when tearing down the whole cluster, 
+  causing `clusterctl/Helm` hooks to fail with a Forbidden error during teardown (known CAPZ issue, see #2656).
+
+### Mandatory updates for `project.yaml`
+
+```yaml
+inventory:
+  helm-plugins:
+    diff:
+      version: v3.15.10
+    helm-git:
+      version: v1.5.2
+    secrets:
+      version: v4.7.7
+  tools:
+    clusterctl:
+      version: 1.13.5
+    kubectl:
+      version: 1.36.2
+    helm:
+      version: 3.21.2
+    helmfile:
+      version: 1.7.0
+    sops:
+      version: 3.13.2
+    age:
+      version: 1.3.1
+    k3d:
+      version: 5.9.0
+    yq:
+      version: 4.53.3
+    aws-iam-authenticator:
+      version: 0.7.18
+    gke-auth-plugin:
+      version: 0.6.3
+```
+
+### List of updated releases
+
+```yaml
+  - name: aws-cluster
+    chart: core-charts/aws-cluster
+    version: 0.3.3
+  - name: aws-iam-provision-operator
+    chart: core-charts/app
+    version: 2.2.0
+  - name: azure-cluster
+    chart: core-charts/aws-cluster
+    version: 0.3.1
+  - name: clusterctl-config
+    chart: core-charts/clusterctl-config
+    version: 0.3.0
+  - name: capi-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.3.0
+  - name: gcp-cluster
+    chart: core-charts/gcp-cluster
+    version: 0.3.1
+  - name: k3d-cluster
+    chart: core-charts/k3d-cluster
+    version: 0.3.0
+  - name: onprem-cluster
+    chart: core-charts/onprem-cluster
+    version: 0.3.2
+```
+
+Unchanged in this release: `aws-iam-provision` (`0.2.1`).
+
+### List of added releases
+
+---
+
 ## Release v2.2.0
 
 ## What's new
