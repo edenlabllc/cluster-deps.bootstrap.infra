@@ -10,14 +10,12 @@
 
 ## Additional information
 
-Requires RMK `v0.49.0` or newer, earlier RMK versions do not support the `{{.Arch}}` placeholder and `arch-*` fields
-and fail to download the tools.
+- Requires RMK `v0.49.0` or newer, earlier RMK versions do not support the `{{.Arch}}` placeholder and `arch-*` fields and fail to download the tools.
+  See the RMK documentation for details:
 
-See the RMK documentation for details:
-
-- [RMK v0.49.1](https://edenlabllc.github.io/rmk/v0.49.1/)
-- [Preparation of the project repository](https://edenlabllc.github.io/rmk/v0.49.1/configuration/project-management/preparation-of-project-repository/#projectyaml)
-  (`{{.Arch}}` placeholder and `arch-amd64` / `arch-arm64` fields).
+  - [RMK v0.49.1](https://edenlabllc.github.io/rmk/v0.49.1/)
+  - [Preparation of the project repository](https://edenlabllc.github.io/rmk/v0.49.1/configuration/project-management/preparation-of-project-repository/#projectyaml)
+    (`{{.Arch}}` placeholder and `arch-amd64` / `arch-arm64` fields).
 
 ### Mandatory updates for `project.yaml`
 
