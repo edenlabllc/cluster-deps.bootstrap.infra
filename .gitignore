@@ -8,3 +8,7 @@ dist/
 .helmfile/
 .idea/
 sops-age-keys/
+
+# Claude Code event log
+.claude/logs/
+.claude/settings.local.json

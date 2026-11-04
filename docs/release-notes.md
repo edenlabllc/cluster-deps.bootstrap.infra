@@ -1,5 +1,30 @@
 # Cluster Deps Release Notes
 
+## Release v3.1.0
+
+## What's new
+
+- Added `darwin/arm64` support for CLI tools in `project.yaml` via `{{.Arch}}` and `arch-amd64` / `arch-arm64`.
+
+## Bug fixes
+
+## Additional information
+
+- Requires RMK `v0.49.0` or newer, earlier RMK versions do not support the `{{.Arch}}` placeholder and `arch-*` fields and fail to download the tools.
+  See the RMK documentation for details:
+
+  - [RMK v0.49.1](https://edenlabllc.github.io/rmk/v0.49.1/)
+  - [Preparation of the project repository](https://edenlabllc.github.io/rmk/v0.49.1/configuration/project-management/preparation-of-project-repository/#projectyaml)
+    (`{{.Arch}}` placeholder and `arch-amd64` / `arch-arm64` fields).
+
+### Mandatory updates for `project.yaml`
+
+### List of updated releases
+
+### List of added releases
+
+---
+
 ## Release v3.0.0
 
 ## What's new
